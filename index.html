@@ -5,6 +5,9 @@
 <meta content="#101419" name="theme-color"/>
 <meta content="DayZ Companion — бесплатное приложение с набором вспомогательных инструментов для DayZ на Windows. Скачать, изучить возможности и обратиться в поддержку." name="description"/>
 <title>DayZ Companion — инструменты для DayZ</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
 <style>
 :root{--bg:#0c1015;--surface:#171d24;--surface2:#1c242d;--ink:#edf1f4;--muted:#9da9b4;--red:#de4445;--line:#303a44;--max:1170px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Segoe UI',system-ui,-apple-system,sans-serif}a{color:inherit;text-decoration:none}a:focus-visible,button:focus-visible{outline:2px solid #ff8282;outline-offset:4px}button{font:inherit}.wrap{width:min(var(--max),calc(100% - 48px));margin:0 auto}.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
@@ -63,6 +66,67 @@ section{padding:84px 0;scroll-margin-top:78px}.section-head{display:flex;align-i
   .tool { --tool-padding: 16px; }
   .preview-grid { grid-template-columns: 1fr; }
 }
+
+/* DayZ Companion: site refinement, Nov 2026 */
+.brand-mark{overflow:hidden;border-color:#42525c;background:#111820;padding:0;flex:0 0 40px}
+.brand-mark img{display:block;width:100%;height:100%;object-fit:cover}
+.hero-donate{display:inline-flex;align-items:center;color:#f0a4a1;font-size:14px;font-weight:700;padding:12px 5px;text-underline-offset:5px}
+.hero-donate:hover,.hero-donate:focus-visible{color:#fff;text-decoration:underline}
+.links a[href="#donate"]{color:#f0a4a1}
+.links a[href="#donate"]:hover{color:#fff}
+.tools-note{font-size:13px;color:#9cabb8;margin:19px 0 0;max-width:850px}
+/* Full-bleed image cards; expanded description lives on the image, not below it. */
+.tool .tool-icon,.tool h3,.tool p.tool-short,.tool .tool-action{z-index:2}
+.toolgrid{align-items:stretch;gap:16px}
+.tool{display:block;position:relative;isolation:isolate;min-height:350px;height:350px;padding:0;overflow:hidden;border-radius:16px;border:1px solid #3d4a57;background:#12191f;box-shadow:0 14px 30px #0003}
+.tool:after{display:none}
+.tool .tool-art{position:absolute;inset:0;width:100%;height:100%;margin:0;object-fit:cover;object-position:center;transition:transform .42s ease;z-index:0}
+.tool::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(7,11,16,.07) 0%,rgba(7,11,16,.20) 36%,rgba(7,11,16,.88) 80%,rgba(7,11,16,.97) 100%);transition:background .28s,opacity .28s}
+.tool .tool-toggle{position:absolute;inset:0;z-index:5;display:block;background:transparent;border:0;width:100%;height:100%;cursor:pointer;border-radius:16px}
+.tool .tool-toggle:focus-visible{outline:2px solid #fa9a93;outline-offset:-5px}
+.tool .tool-toggle:hover{background:transparent}
+.tool .tool-icon{position:absolute;top:20px;left:22px;width:39px;height:39px;margin:0;backdrop-filter:blur(8px);background:#18212abf;border:1px solid #a04b50;color:#ff8b86;font-size:19px;transition:opacity .2s}
+.tool h3{position:absolute;bottom:89px;left:22px;right:20px;font-size:21px;line-height:1.15;margin:0;color:#fff;text-shadow:0 2px 10px #000c;transition:top .2s}
+.tool p.tool-short{position:absolute;bottom:31px;left:22px;right:22px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:13px;line-height:1.42;font-weight:500;color:#e0e8ed;margin:0;text-shadow:0 1px 5px #000b}
+.tool .tool-action{position:absolute;bottom:11px;right:21px;font-size:11px;color:#f8b7b3;font-weight:700;opacity:.9}
+.tool .tool-extra{position:absolute;inset:80px 20px 18px 22px;z-index:4;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .23s,transform .23s,visibility .23s;overflow:auto;overscroll-behavior:contain;pointer-events:none;scrollbar-width:thin;scrollbar-color:#626b77 #10151b}
+.tool .tool-extra p{color:#e2e9ee;font-size:14px;line-height:1.6;font-weight:500;margin:0;text-shadow:0 1px 6px #0009}
+.tool.is-open::before{background:linear-gradient(160deg,#090d12e8,#0d1319f3)}
+.tool.is-open .tool-art{transform:scale(1.045)}
+.tool.is-open h3{top:25px;bottom:auto}
+.tool.is-open .tool-short,.tool.is-open .tool-icon,.tool.is-open .tool-action{opacity:0;visibility:hidden}
+.tool.is-open .tool-extra{opacity:1;visibility:visible;transform:none;pointer-events:auto;z-index:6}
+@media(hover:hover) and (pointer:fine){
+ .tool:hover::before{background:linear-gradient(155deg,#090d12e8,#0d1319f1)}
+ .tool:hover .tool-art{transform:scale(1.045)}
+ .tool:hover h3{top:25px;bottom:auto}
+ .tool:hover .tool-short,.tool:hover .tool-icon,.tool:hover .tool-action{opacity:0;visibility:hidden}
+ .tool:hover .tool-extra{opacity:1;visibility:visible;transform:none;pointer-events:auto;z-index:6}
+}
+.tool:focus-within{overflow:hidden;border-color:#e86c69;box-shadow:0 0 0 2px #b54c5180}
+.tool:focus-within::before{background:linear-gradient(160deg,#090d12e8,#0d1319f3)}
+.tool:focus-within h3{top:25px;bottom:auto}
+.tool:focus-within .tool-short,.tool:focus-within .tool-icon,.tool:focus-within .tool-action{opacity:0;visibility:hidden}
+.tool:focus-within .tool-extra{opacity:1;visibility:visible;transform:none;pointer-events:auto;z-index:6}
+/* Support should be compact: link to the form, not a tall embedded iframe. */
+.support-panel.support-compact{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;padding:28px 30px;min-height:150px}
+.support-symbol{display:grid;place-items:center;width:66px;height:66px;border:1px solid #725154;border-radius:18px;background:#35252b;color:#ff8b84;font-size:31px}
+.support-description b{font-size:19px}
+.support-description p{margin:8px 0 0;color:#b0bdc7;font-size:14px;max-width:690px}
+.support-panel.support-compact .btn{white-space:nowrap}
+.donate-card{position:relative;grid-template-columns:auto 1fr auto;gap:22px;padding:32px;border-color:#73464a;background:linear-gradient(117deg,#32242b,#1a2028 64%,#161d24);overflow:hidden}
+.donate-card::after{content:"";position:absolute;z-index:0;right:-85px;top:-105px;width:280px;height:280px;border-radius:50%;border:1px solid #e46a7030;box-shadow:0 0 0 42px #e46a7010,0 0 0 88px #e46a7008;pointer-events:none}
+.donate-card>*{position:relative;z-index:1}
+.donate-symbol{display:grid;place-items:center;width:65px;height:65px;border-radius:19px;background:#582b33;border:1px solid #9b4e56;color:#ff9b97;font-size:30px}
+.donate-card h3{font-size:24px;line-height:1.2}
+.donate-card .donate-info p{max-width:670px;line-height:1.6;font-size:14px}
+.donate-caption{font-size:12px;margin-top:13px;color:#e5aca7}
+.donate-button{white-space:nowrap}
+@media(max-width:940px){.tool{min-height:360px;height:360px}.support-panel.support-compact{grid-template-columns:auto 1fr}.support-panel.support-compact .btn{grid-column:2;justify-self:start}.donate-card{grid-template-columns:auto 1fr}.donate-button{grid-column:2;justify-self:start}}
+@media(max-width:720px){.tool{height:340px;min-height:340px}.tool h3{font-size:19px;bottom:83px}.tool .tool-extra p{font-size:13px;line-height:1.52}.tool .tool-extra{inset:75px 15px 14px 17px}.tool h3{left:17px}.tool p.tool-short{left:17px;right:17px}.tool .tool-icon{left:17px}.support-panel.support-compact{padding:22px;gap:14px}.donate-card{padding:24px;gap:17px}.hero-donate{padding:12px 5px}}
+@media(max-width:600px){.toolgrid{grid-template-columns:1fr}.tool{height:310px;min-height:310px}.tool .tool-extra p{font-size:14px;line-height:1.55}.support-panel.support-compact{display:flex;flex-direction:column;align-items:flex-start}.support-panel.support-compact .btn{width:100%}.donate-card{display:flex;flex-direction:column;align-items:flex-start}.donate-button{width:100%}.donate-symbol{width:55px;height:55px}.tool h3{bottom:76px}}
+@media(prefers-reduced-motion:reduce){.tool *,.tool::before{transition:none!important}}
+
 </style>
 <style>
 /* Final compact pass: preserve design, reduce excessive height */
@@ -113,22 +177,132 @@ section { padding-block: 57px; }
     .mobile-menu summary { padding: 7px 9px; font-size: 12px; }
     .hero h1 { font-size: 37px; }
 }
+
+/* Hero: lightweight rotating copy. Grid reserves the height of the longest slide,
+   so buttons remain fixed while only the copy fades. */
+.hero-slides{display:grid;max-width:653px;isolation:isolate}
+.hero-slide{grid-area:1/1;min-width:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .26s ease,visibility .26s ease}
+.hero-slide.is-active{opacity:1;visibility:visible;pointer-events:auto;transition:opacity .35s ease .28s,visibility 0s}
+.hero-slide h1{overflow-wrap:normal}
+.hero-switcher{display:flex;align-items:center;gap:7px;margin:0 0 19px;min-height:18px}
+.hero-dot{cursor:pointer;width:10px;height:8px;padding:0;border:0;border-radius:999px;background:#687480;transition:width .3s ease,background .3s ease}
+.hero-dot.is-active{width:30px;background:#ef5961}
+.hero-dot:hover{background:#ffa1a5}
+.hero-dot:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media (min-width:721px){.hero-inner{grid-template-columns:minmax(0,720px)}.hero-slides{max-width:720px}}
+@media (max-width:430px){.hero-slide h1{font-size:clamp(32px,8.5vw,36px)!important;letter-spacing:-1.1px;line-height:1.1}.hero-slide p{font-size:16px!important;line-height:1.46}}
+@media (max-width:720px){.hero-slides{max-width:100%}.hero-switcher{margin-bottom:18px}}
+@media (prefers-reduced-motion:reduce){.hero-slide,.hero-dot{transition:none!important}}
+
+/* Targeted refinement: clearer typography + original white emblem without a frame. */
+body { font-family: "Segoe UI", Arial, sans-serif; }
+.brand { font-weight: 700; letter-spacing: -.45px; gap: 11px; }
+.brand-mark {
+  width: 58px; height: 43px; flex: 0 0 58px; display: flex; align-items: center;
+  justify-content: center; padding: 0; border: 0; border-radius: 0;
+  background: transparent; box-shadow: none; overflow: visible;
+}
+.brand-mark img { width: 57px; height: auto; max-height: 42px; object-fit: contain; }
+.btn, .navcta { font-size: 15px; font-weight: 600; line-height: 1.3; letter-spacing: 0; text-shadow: none; }
+.btn { transition: background-color .17s ease, border-color .17s ease, box-shadow .17s ease; }
+.btn:hover { transform: none; }
+.primary:hover { box-shadow: 0 7px 20px #b92d3340; background: linear-gradient(140deg,#e44b50,#a92b33); }
+.secondary:hover { background: #293542; border-color: #63717e; }
+.links { font-size: 14px; font-weight: 600; }
+.hero p { color: #d4dbe1; }
+.hero-donate { font-weight: 600; }
+.section-head p, .support-lead { color: #b6c1cb; }
+.kicker { letter-spacing: 1.65px; font-weight: 700; }
+.tool p.tool-short { font-size: 14px; line-height: 1.45; font-weight: 400; color: #f1f4f6; }
+.tool .tool-extra p { font-size: 14px; line-height: 1.63; font-weight: 400; color: #f0f4f7; }
+.tool .tool-action { font-size: 12px; font-weight: 600; }
+.faq { gap: 14px; }
+.faq-item { background:#151d25; }
+details.faq-item { padding: 19px 22px; }
+details.faq-item summary { font-size: 16px; line-height: 1.45; font-weight: 600; letter-spacing: 0; }
+details.faq-item p { font-size: 15px; color: #c6d0d9; line-height: 1.66; margin: 12px 0 1px; }
+@media(max-width:370px) {
+  .brand-mark { width: 44px; height: 34px; flex-basis: 44px; }
+  .brand-mark img { width: 44px; max-height: 34px; }
+}
+@media(prefers-reduced-motion: reduce) { .btn { transition: none; } }
+
+/* Independent FAQ columns avoid a tall blank card next to an expanded answer. */
+.faq { align-items: start; }
+.faq-column { display:flex; flex-direction:column; gap:14px; min-width:0; }
+@media(max-width:720px) {
+ .faq { display:flex; flex-direction:column; gap:14px; }
+ .faq-column { display:contents; }
+ .faq-1{order:1}.faq-2{order:2}.faq-3{order:3}.faq-4{order:4}
+}
+
+/* Original app SVG icons: consistent optical size, centred across all nine tools. */
+.tool .tool-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  top: 18px;
+  left: 20px;
+  border-radius: 12px;
+  padding: 0;
+  background: rgba(14, 20, 28, .82);
+  border: 1px solid rgba(175, 90, 95, .68);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .18);
+  color: inherit;
+  line-height: 1;
+}
+.tool .tool-icon img {
+  display: block;
+  width: 25px;
+  height: 25px;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  flex: none;
+}
+@media (max-width: 720px) {
+  .tool .tool-icon { left: 16px; top: 16px; }
+}
+@media (max-width: 430px) {
+  .tool .tool-icon { display: grid; }
+}
 </style><meta content="dark" name="color-scheme"/></head>
 <body>
-<header><div class="wrap navbar"><a aria-label="DayZ Companion, главная" class="brand" href="#top"><span aria-hidden="true" class="brand-mark">✛</span><span>DayZ <strong>Companion</strong></span></a><nav aria-label="Основная навигация" class="links"><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Донаты</a><a class="navcta" href="#download">Загрузить</a></nav><details class="mobile-menu"><summary>Меню ☰</summary><nav><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Донаты</a></nav></details></div></header>
+<header><div class="wrap navbar"><a aria-label="DayZ Companion, главная" class="brand" href="#top"><span aria-hidden="true" class="brand-mark"><img src="assets/dayz-logo-mark.png" width="57" height="35" alt=""/></span><span>DayZ <strong>Companion</strong></span></a><nav aria-label="Основная навигация" class="links"><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Поддержать проект</a><a class="navcta" href="#download">Загрузить</a></nav><details class="mobile-menu"><summary>Меню ☰</summary><nav><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Поддержать проект</a></nav></details></div></header>
 <main id="top">
-<div class="hero"><img alt="Выживший на фоне заката" class="hero-art" fetchpriority="high" height="821" src="assets/hero.webp" width="1916"/><div class="wrap hero-inner"><div><div class="eyebrow">Компаньон для DayZ · Windows</div><h1>Больше контроля.<br/><span>Меньше лишних действий.</span></h1><p>DayZ Companion объединяет вспомогательные инструменты, их настройки и диагностику в одном бесплатном приложении.</p><div class="actions"><a class="btn primary" href="https://github.com/Surik115/dayz-companion-releases/releases/download/v1.6.4/DayZCompanion-1.6.4-Windows.zip" rel="noopener noreferrer" target="_blank">↓ Скачать для Windows</a><a class="btn secondary" href="#tools">Посмотреть возможности ↗</a></div><div class="fine"><span><b>●</b> STABLE v1.6.4</span><span>◉ Portable ZIP</span><span>✧ Бесплатно</span></div></div></div></div>
+<div class="hero"><img alt="Выживший на фоне заката" class="hero-art" fetchpriority="high" height="821" src="assets/hero.webp" width="1916"/><div class="wrap hero-inner"><div><div class="eyebrow">Компаньон для DayZ · Windows</div>
+<div class="hero-slides" aria-label="Преимущества DayZ Companion">
+  <div class="hero-slide is-active" aria-hidden="false">
+    <h1>Твой DayZ.<br/><span>Твои инструменты.</span></h1>
+    <p>Девять полезных инструментов в одном бесплатном приложении. Упрощай привычные действия, настраивай изображение и звук, пользуйся картой прямо во время игры.</p>
+  </div>
+  <div class="hero-slide" aria-hidden="true">
+    <h1>Сосредоточься на игре.<br/><span>Остальное упростит Companion.</span></h1>
+    <p>От автоматического бега до интерактивной карты — меньше рутинных действий и больше внимания тому, что происходит в DayZ.</p>
+  </div>
+  <div class="hero-slide" aria-hidden="true">
+    <h1>Меньше рутины.<br/><span>Больше времени на выживание.</span></h1>
+    <p>Карта, звук, изображение и быстрые действия в одном приложении — чтобы больше времени оставалось на само выживание.</p>
+  </div>
+</div>
+<div class="hero-switcher" role="group" aria-label="Варианты приветствия">
+  <button type="button" class="hero-dot is-active" aria-label="Показать первый заголовок" aria-pressed="true"></button>
+  <button type="button" class="hero-dot" aria-label="Показать второй заголовок" aria-pressed="false"></button>
+  <button type="button" class="hero-dot" aria-label="Показать третий заголовок" aria-pressed="false"></button>
+</div>
+<div class="actions"><a class="btn primary" href="https://github.com/Surik115/dayz-companion-releases/releases/download/v1.6.4/DayZCompanion-1.6.4-Windows.zip" rel="noopener noreferrer" target="_blank">↓ Скачать для Windows</a><a class="btn secondary" href="#tools">Посмотреть возможности ↗</a><a class="hero-donate" href="#donate">♡ Поддержать проект</a></div><div class="fine"><span><b>●</b> STABLE v1.6.4</span><span>◉ Portable ZIP</span><span>✧ Бесплатно</span></div></div></div></div>
 <section id="tools"><div class="wrap"><div class="section-head"><div><div class="kicker">Возможности</div><h2>Девять инструментов. Одно окно.</h2></div><p>Быстрый доступ к инструментам и их настройкам без разрозненных утилит.</p></div><div class="toolgrid">
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-magnifier.webp" width="1672"/><span class="tool-icon">⊕</span><h3>Лупа</h3><p>Дополнительная оптика.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-morse.webp" width="1672"/><span class="tool-icon">••</span><h3>Морзе / Nasdara</h3><p>Работа с сигналами Морзе.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-gamma.webp" width="1672"/><span class="tool-icon">◐</span><h3>Гамма</h3><p>Настройка изображения.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-earplugs.webp" width="1672"/><span class="tool-icon">♫</span><h3>Беруши</h3><p>Управление приглушением звука.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-auto-run.webp" width="1672"/><span class="tool-icon">➤</span><h3>Автобег</h3><p>Управление автоматическим бегом.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-crosshair.webp" width="1672"/><span class="tool-icon">⌖</span><h3>Прицел</h3><p>Настраиваемый экранный прицел.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-code-lock.webp" width="1672"/><span class="tool-icon">▣</span><h3>Кодлок</h3><p>Инструменты для кодового замка.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-xam-map.webp" width="1672"/><span class="tool-icon">◇</span><h3>Карта XAM</h3><p>Доступ к карте.</p></article>
-<article class="tool"><img alt="" class="tool-art" decoding="async" height="941" loading="lazy" src="assets/tool-auto-lean.webp" width="1672"/><span class="tool-icon">↔</span><h3>Автонаклон</h3><p>Настройки автоматических наклонов.</p></article>
-</div></div></section>
+<article class="tool" id="tool-magnifier"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-magnifier.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/magnifier.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Доп. оптика (лупа)</h3><p class="tool-short">Увеличение области в центре экрана для более удобного наблюдения за целью.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-magnifier"><p>Использует функцию экранного увеличения Windows и показывает увеличенную область в круге по центру экрана. Помогает рассмотреть удалённую цель и мелкие детали, не меняя игровую оптику.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Доп. оптика (лупа)" aria-controls="description-magnifier"></button></article>
+<article class="tool" id="tool-morse"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-morse.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/morse.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Морзе / Nasdara</h3><p class="tool-short">Распознавание сигналов Морзе и преобразование их в координаты и код от бункера.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-morse"><p>Слушает звуки игры и распознаёт сигналы Морзе на Nasdara. Небольшая панель поверх DayZ показывает принимаемые сигналы и цифры в процессе расшифровки. После завершения отображаются координаты X и Y, PIN-код бункера и количество повторений сообщения. Данные сохраняются в истории.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Морзе / Nasdara" aria-controls="description-morse"></button></article>
+<article class="tool" id="tool-gamma"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-gamma.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/gamma.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Гамма</h3><p class="tool-short">Осветление изображения для комфортной игры в самые тёмные ночи DayZ.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-gamma"><p>Ночь в DayZ бывает настолько тёмной, что сложно различить окружающие объекты. Инструмент позволяет корректировать гамму, чтобы лучше видеть местность, здания и ориентиры без постоянной настройки монитора.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Гамма" aria-controls="description-gamma"></button></article>
+<article class="tool" id="tool-earplugs"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-earplugs.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/earplugs.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Беруши</h3><p class="tool-short">Приглушайте громкие звуки DayZ, чтобы лучше слышать друзей в Discord.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-earplugs"><p>Шум двигателя, транспорта и другие громкие звуки игры могут заглушать голосовую связь. Беруши быстро уменьшают громкость DayZ, не приглушая звук Discord и других программ, чтобы общаться с командой было удобнее.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Беруши" aria-controls="description-earplugs"></button></article>
+<article class="tool" id="tool-auto-run"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-auto-run.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/auto-run.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Автобег</h3><p class="tool-short">Преодолевайте большие расстояния без постоянного удержания клавиш.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-auto-run"><p>Большие карты DayZ требуют долгих переходов. Включите автобег, и персонаж продолжит движение без удержания кнопок на клавиатуре. Направляйте его мышью и при необходимости корректируйте маршрут.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Автобег" aria-controls="description-auto-run"></button></article>
+<article class="tool" id="tool-crosshair"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-crosshair.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/crosshair.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Экранный прицел</h3><p class="tool-short">Настраиваемая точка или перекрестие в центре игрового экрана.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-crosshair"><p>Показывает поверх игры компактный прицел — точку или перекрестие. Доступны настройки формы, цвета, размера и положения, чтобы выбрать удобный ориентир в центре экрана.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Экранный прицел" aria-controls="description-crosshair"></button></article>
+<article class="tool" id="tool-code-lock"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-code-lock.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/code-lock.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Кодлок</h3><p class="tool-short">Автоматический ввод шестизначного кода замка одной клавишей.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-code-lock"><p>Сохраните шестизначный код и назначьте горячую клавишу. Подойдите к замку: Companion введёт комбинацию и подтвердит её нажатием Enter. Не нужно каждый раз вспоминать и набирать длинный код вручную.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Кодлок" aria-controls="description-code-lock"></button></article>
+<article class="tool" id="tool-xam-map"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-xam-map.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/xam-map.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Карта XAM</h3><p class="tool-short">Подробная интерактивная карта DayZ прямо поверх игры.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-xam-map"><p>Открывайте карту поверх DayZ без постоянного переключения в браузер. Выбирайте Чернарусь, Ливонию, Сахал, Nasdara и другие доступные карты. Изучайте метки лута и важных объектов, чтобы планировать маршруты.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Карта XAM" aria-controls="description-xam-map"></button></article>
+<article class="tool" id="tool-auto-lean"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-auto-lean.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/auto-lean.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Автонаклон</h3><p class="tool-short">Автоматический наклон персонажа при движении влево и вправо.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-auto-lean"><p>При движении на A или D персонаж автоматически наклоняется соответственно влево или вправо. Это помогает выглядывать из-за углов и двигаться возле укрытий, меняя положение тела. Возможность проходит тестирование в 1.7.0 TEST.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Автонаклон" aria-controls="description-auto-lean"></button></article>
+</div><p class="tools-note">Описание возможностей проекта. Часть функций и новый интерфейс проходят тестирование для версии 1.7.0 TEST; текущая загрузка — STABLE v1.6.4.</p></div></section>
 <section class="band"><div class="wrap feature-row"><div class="feature"><span class="feature-icon">▤</span><b>Все настройки под рукой</b><p>Единый интерфейс управления вместо множества отдельных окон.</p></div><div class="feature"><span class="feature-icon">⌘</span><b>Горячие клавиши</b><p>Настраиваемые действия для доступных инструментов.</p></div><div class="feature"><span class="feature-icon">▧</span><b>Диагностика и помощь</b><p>Подготовка технического отчёта и обращения разработчику.</p></div></div></section>
 <section aria-labelledby="preview-title" id="preview"><div class="wrap">
 <div class="section-head"><div><div class="kicker">Предпросмотр 1.7.0 TEST</div><h2 id="preview-title">Интерфейс DayZ Companion</h2></div><p>На скриншотах показан предварительный интерфейс тестовой версии 1.7.0.</p></div>
@@ -139,9 +313,70 @@ section { padding-block: 57px; }
 </div>
 </div></section>
 <section id="download"><div class="wrap"><div class="section-head"><div><div class="kicker">Загрузка</div><h2>Установщик не требуется</h2></div></div><div class="download-card"><div><span class="version">STABLE · v1.6.4</span><h3>DayZ Companion для Windows</h3><p>Скачайте официальный portable ZIP, распакуйте в удобную папку и запускайте приложение. Сборки размещены в GitHub Releases.</p><a class="plain-link" href="https://github.com/Surik115/dayz-companion-releases/releases/latest" rel="noopener noreferrer" target="_blank">Все сведения об актуальном стабильном релизе ↗</a></div><a class="btn primary" href="https://github.com/Surik115/dayz-companion-releases/releases/download/v1.6.4/DayZCompanion-1.6.4-Windows.zip" rel="noopener noreferrer" target="_blank">↓ Скачать ZIP</a></div></div></section>
-<section class="band" id="support"><div class="wrap"><div class="kicker">Обратная связь</div><h2>Нашли ошибку? Расскажите нам.</h2><p class="support-lead">Опишите проблему или предложите улучшение. Если у вас есть ZIP обращения из раздела «Поддержка» DayZ Companion, приложите его к форме. В архив можно включить диагностику и выбранный скриншот.</p><div class="support-panel"><div class="support-top"><div><b>Форма поддержки DayZ Companion</b><p>Ваше обращение обрабатывается через Яндекс Формы. Загрузка файла необязательна; размер одного ZIP — до 20 МБ.</p></div><a class="btn secondary" href="https://forms.yandex.ru/u/6af9b3a7974ab27c31e6bfa4/" rel="noopener noreferrer" target="_blank">Открыть отдельно ↗</a></div><iframe loading="lazy" src="https://forms.yandex.ru/u/6af9b3a7974ab27c31e6bfa4/" title="DayZ Companion — форма обратной связи"></iframe><div class="support-note">Если форма не загрузилась внутри страницы, <a href="https://forms.yandex.ru/u/6af9b3a7974ab27c31e6bfa4/" rel="noopener noreferrer" target="_blank">откройте её напрямую</a>. Не прикладывайте пароли, ключи и чужие персональные данные.</div></div></div></section>
-<section id="donate"><div class="wrap"><div class="kicker">Поддержать проект</div><div class="donate-card"><div><h3>Поддержать DayZ Companion</h3><p>Проект бесплатный и развивается благодаря интересу игроков. Если приложение оказалось полезным, вы можете добровольно поддержать автора. Оплата проходит на внешней странице CloudTips.</p></div><a aria-label="Добровольно поддержать DayZ Companion через CloudTips" class="btn primary" href="https://pay.cloudtips.ru/p/392ecf9b" rel="noopener noreferrer" target="_blank">♥ Поддержать проект</a></div></div></section>
-<section class="band" id="faq"><div class="wrap"><div class="section-head"><div><div class="kicker">Вопросы и ответы</div><h2>Коротко о главном</h2></div></div><div class="faq"><details class="faq-item"><summary>Приложение платное?</summary><p>Нет. DayZ Companion распространяется бесплатно. Добровольная поддержка автора доступна через CloudTips и не влияет на функции приложения.</p></details><details class="faq-item"><summary>Нужен ли установщик?</summary><p>Нет. Проект распространяется как portable ZIP: достаточно распаковать архив и запустить приложение.</p></details><details class="faq-item"><summary>Как отправить диагностический отчёт?</summary><p>Создайте диагностику в приложении, при необходимости добавьте её и скриншот к обращению в разделе «Поддержка», сохраните общий ZIP и прикрепите его в форме выше.</p></details><details class="faq-item"><summary>Можно ли использовать инструменты на любом сервере?</summary><p>Правила серверов и требования к сторонним инструментам могут различаться. Пользователь должен самостоятельно проверить разрешённость функций.</p></details></div></div></section>
+<section class="band" id="support"><div class="wrap"><div class="kicker">Обратная связь</div><h2>Вопрос, ошибка или предложение?</h2><p class="support-lead">Помогите сделать DayZ Companion удобнее. Сообщите о проблеме, предложите новую функцию или задайте вопрос о работе приложения.</p>
+<div class="support-panel support-compact"><div class="support-symbol" aria-hidden="true">✉</div><div class="support-description"><b>Связаться с разработчиком</b><p>Откройте короткую форму поддержки в Яндексе. При необходимости можно приложить диагностический ZIP или скриншот. Не отправляйте пароли, ключи и чужие персональные данные.</p></div><a class="btn secondary" href="https://forms.yandex.ru/u/6af9b3a7974ab27c31e6bfa4/" rel="noopener noreferrer" target="_blank">Открыть форму ↗</a></div></div></section>
+<section id="donate"><div class="wrap"><div class="kicker">Поддержать проект</div><div class="donate-card"><div class="donate-symbol" aria-hidden="true">♥</div><div class="donate-info"><h3>Помогите DayZ Companion развиваться</h3><p>DayZ Companion создаётся для игроков и остаётся бесплатным. Если наши инструменты оказались полезными, вы можете добровольно поддержать разработку. Ваша поддержка помогает уделять больше времени улучшениям, исправлению ошибок и новым возможностям.</p><div class="donate-caption">Добровольно · Без подписки и платных функций</div></div><a aria-label="Добровольно поддержать DayZ Companion через CloudTips" class="btn primary donate-button" href="https://pay.cloudtips.ru/p/392ecf9b" rel="noopener noreferrer" target="_blank">♥ Поддержать разработку ↗</a></div></div></section>
+<section class="band" id="faq"><div class="wrap"><div class="section-head"><div><div class="kicker">Вопросы и ответы</div><h2>Главное о DayZ Companion</h2></div><p>Немного о том, как работает приложение и что важно знать перед использованием.</p></div><div class="faq"><div class="faq-column"><details class="faq-item faq-1"><summary>DayZ Companion бесплатный?</summary><p>Да. Приложение распространяется бесплатно, без подписок и платного доступа к инструментам. Если оно оказалось полезным, вы можете добровольно поддержать развитие проекта.</p></details><details class="faq-item faq-3"><summary>Нужно ли устанавливать моды для DayZ?</summary><p>Нет. Companion работает отдельно от игры и не требует установки внутриигровых модов. Доступные инструменты включаются и настраиваются в самом приложении.</p></details></div><div class="faq-column"><details class="faq-item faq-2"><summary>Изменяет ли Companion файлы DayZ?</summary><p>Companion работает как отдельное приложение Windows и не модифицирует игровые ресурсы или исполняемые файлы DayZ. Инструменты используют штатные возможности Windows для работы со звуком и изображением, отображения информации поверх игры и управления нажатиями клавиш.</p></details><details class="faq-item faq-4"><summary>Можно ли использовать инструменты на любом сервере?</summary><p>Правила серверов могут различаться. Некоторые сообщества ограничивают использование сторонних программ и автоматизации. Перед использованием рекомендуем ознакомиться с правилами своего сервера.</p></details></div></div></div></section>
 </main>
 <footer><div class="wrap"><span><b>DayZ Companion</b> · Независимый проект для Windows.</span><span><a href="https://github.com/Surik115/dayz-companion-releases/releases" rel="noopener noreferrer" target="_blank">Релизы GitHub</a> · <a href="#support">Поддержка</a></span><span>© 2026 DayZ Companion</span></div></footer>
+<script>
+// Native pointer hover is handled in CSS. On touch screens, cards toggle on tap.
+document.querySelectorAll('.tool').forEach(card => {
+  const control = card.querySelector('.tool-toggle');
+  control.addEventListener('click', () => {
+    const opened = card.classList.toggle('is-open');
+    control.setAttribute('aria-expanded', String(opened));
+    control.setAttribute('aria-label', `${opened ? 'Свернуть' : 'Показать'} подробности: ${card.querySelector('h3').textContent}`);
+  });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.tool.is-open').forEach(card => {
+      card.classList.remove('is-open');
+      card.querySelector('.tool-toggle').setAttribute('aria-expanded', 'false');
+    });
+  }
+});
+
+// Small copy rotator only; background and CTA buttons never change.
+(() => {
+  const slides = [...document.querySelectorAll('.hero-slide')];
+  const dots = [...document.querySelectorAll('.hero-dot')];
+  const hero = document.querySelector('.hero-inner');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let index = 0;
+  let timer = null;
+  let paused = false;
+  function show(next) {
+    index = (next + slides.length) % slides.length;
+    slides.forEach((slide, i) => {
+      const active = i === index;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', String(!active));
+      dots[i].classList.toggle('is-active', active);
+      dots[i].setAttribute('aria-pressed', String(active));
+    });
+  }
+  function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
+  function start() {
+    stop();
+    if (!reduceMotion.matches && !paused && !document.hidden) {
+      timer = setInterval(() => show(index + 1), 6500);
+    }
+  }
+  dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); start(); }));
+  hero.addEventListener('mouseenter', () => { paused = true; stop(); });
+  hero.addEventListener('mouseleave', () => { paused = false; start(); });
+  hero.addEventListener('focusin', () => { paused = true; stop(); });
+  hero.addEventListener('focusout', () => {
+    if (!hero.contains(document.activeElement)) { paused = false; start(); }
+  });
+  document.addEventListener('visibilitychange', start);
+  reduceMotion.addEventListener('change', () => {
+    if (reduceMotion.matches) show(0);
+    start();
+  });
+  start();
+})();
+</script>
 </body></html>
