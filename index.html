@@ -42,7 +42,7 @@ section{padding:84px 0;scroll-margin-top:78px}.section-head{display:flex;align-i
   height: auto;
   margin: calc(-1 * var(--tool-padding)) calc(-1 * var(--tool-padding)) 17px;
 }
-.tool:focus-within { overflow: visible; }
+
 .preview-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .preview-card {
   margin: 0;
@@ -103,11 +103,8 @@ section{padding:84px 0;scroll-margin-top:78px}.section-head{display:flex;align-i
  .tool:hover .tool-short,.tool:hover .tool-icon,.tool:hover .tool-action{opacity:0;visibility:hidden}
  .tool:hover .tool-extra{opacity:1;visibility:visible;transform:none;pointer-events:auto;z-index:6}
 }
-.tool:focus-within{overflow:hidden;border-color:#e86c69;box-shadow:0 0 0 2px #b54c5180}
-.tool:focus-within::before{background:linear-gradient(160deg,#090d12e8,#0d1319f3)}
-.tool:focus-within h3{top:25px;bottom:auto}
-.tool:focus-within .tool-short,.tool:focus-within .tool-icon,.tool:focus-within .tool-action{opacity:0;visibility:hidden}
-.tool:focus-within .tool-extra{opacity:1;visibility:visible;transform:none;pointer-events:auto;z-index:6}
+/* Focus alone must not reveal a card on touch devices. The .is-open state controls it.
+   Keyboard users still see the existing .tool-toggle:focus-visible outline. */
 /* Support should be compact: link to the form, not a tall embedded iframe. */
 .support-panel.support-compact{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;padding:28px 30px;min-height:150px}
 .support-symbol{display:grid;place-items:center;width:66px;height:66px;border:1px solid #725154;border-radius:18px;background:#35252b;color:#ff8b84;font-size:31px}
@@ -127,6 +124,21 @@ section{padding:84px 0;scroll-margin-top:78px}.section-head{display:flex;align-i
 @media(max-width:600px){.toolgrid{grid-template-columns:1fr}.tool{height:310px;min-height:310px}.tool .tool-extra p{font-size:14px;line-height:1.55}.support-panel.support-compact{display:flex;flex-direction:column;align-items:flex-start}.support-panel.support-compact .btn{width:100%}.donate-card{display:flex;flex-direction:column;align-items:flex-start}.donate-button{width:100%}.donate-symbol{width:55px;height:55px}.tool h3{bottom:76px}}
 @media(prefers-reduced-motion:reduce){.tool *,.tool::before{transition:none!important}}
 
+
+/* Prevent the harsh seam where the hero image starts on wide monitors.
+   Fade the left edge of the original image instead of stretching/cropping it. */
+@media (min-width: 721px) {
+  .hero-art {
+    inset: 0 0 0 auto;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    object-position: right center;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 29%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 29%);
+  }
+  .hero-inner { padding-block: 39px 43px; }
+}
 </style>
 <style>
 /* Final compact pass: preserve design, reduce excessive height */
@@ -267,9 +279,81 @@ details.faq-item p { font-size: 15px; color: #c6d0d9; line-height: 1.66; margin:
 @media (max-width: 430px) {
   .tool .tool-icon { display: grid; }
 }
+
+/* Lightweight RU / EN selector: no external fonts, images or libraries. */
+.navbar{gap:13px}
+.lang-switch{display:inline-flex;align-items:center;gap:2px;flex:0 0 auto;border:1px solid #384652;background:#171f28;padding:3px;border-radius:10px;white-space:nowrap}
+.lang-option{appearance:none;border:0;min-width:34px;min-height:32px;padding:6px 8px;border-radius:7px;background:transparent;color:#b5c0ca;font:700 12px/1 "Segoe UI",Arial,sans-serif;cursor:pointer;transition:background .18s,color .18s}
+.lang-option:hover{color:#fff;background:#27323d}
+.lang-option[aria-pressed="true"]{background:#a8323a;color:#fff;box-shadow:0 1px 5px #0005}
+.lang-option:focus-visible{outline:2px solid #fff;outline-offset:3px}
+@media(max-width:1050px){.navbar{gap:10px}.links{gap:13px}.navcta{padding:10px 12px}}
+@media(max-width:930px){.links{display:none}.mobile-menu{display:block}.lang-switch{margin-left:auto}}
+@media(max-width:720px){.navbar{gap:10px}.lang-option{min-width:32px;min-height:30px;padding:6px}}
+@media(max-width:430px){.mobile-menu summary{font-size:0;min-width:44px;min-height:35px;padding:6px;display:flex;align-items:center;justify-content:center}.mobile-menu summary::after{content:"☰";font-size:18px;line-height:1}}
+@media(max-width:370px){.navbar{gap:7px}.brand{font-size:15px}.brand-mark{flex-basis:41px;width:41px}.brand-mark img{width:41px}.lang-switch{padding:2px}.lang-option{min-width:29px;min-height:29px;padding:5px}.mobile-menu summary{padding:6px}}
+@media(prefers-reduced-motion:reduce){.lang-option{transition:none}}
+
+/* Mobile card interaction fix (16 Nov 2026): tapping should toggle immediately,
+   and a long description must not trap vertical page scrolling. */
+@media (max-width: 600px), (hover: none) and (pointer: coarse) {
+  .tool .tool-toggle {
+    z-index: 8;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .tool.is-open {
+    height: auto;
+    min-height: 310px;
+  }
+  .tool.is-open .tool-extra {
+    position: relative;
+    inset: auto;
+    box-sizing: border-box;
+    min-height: 310px;
+    max-height: none;
+    overflow: visible;
+    overscroll-behavior: auto;
+    padding: 78px 18px 28px;
+    margin: 0;
+    pointer-events: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .tool.is-open .tool-toggle::after {
+    content: "×";
+    position: absolute;
+    top: 18px;
+    right: 16px;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    font-size: 23px;
+    font-weight: 400;
+    line-height: 1;
+    color: #f5f6f8;
+    background: rgba(22, 30, 39, .85);
+    border: 1px solid rgba(222, 105, 109, .7);
+    border-radius: 9px;
+    pointer-events: none;
+  }
+}
+
+/* Long animated slogans should not reserve a huge blank region under shorter copy.
+   Keep the controls fixed; scale only the longer headlines on desktop. */
+@media (min-width: 721px) {
+  .hero-slide:nth-child(2) h1,
+  .hero-slide:nth-child(3) h1 {
+    font-size: clamp(40px, 3.35vw, 48px);
+    line-height: 1.1;
+    letter-spacing: -1.4px;
+  }
+}
 </style><meta content="dark" name="color-scheme"/></head>
 <body>
-<header><div class="wrap navbar"><a aria-label="DayZ Companion, главная" class="brand" href="#top"><span aria-hidden="true" class="brand-mark"><img src="assets/dayz-logo-mark.png" width="57" height="35" alt=""/></span><span>DayZ <strong>Companion</strong></span></a><nav aria-label="Основная навигация" class="links"><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Поддержать проект</a><a class="navcta" href="#download">Загрузить</a></nav><details class="mobile-menu"><summary>Меню ☰</summary><nav><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Поддержать проект</a></nav></details></div></header>
+<header><div class="wrap navbar"><a aria-label="DayZ Companion, главная" class="brand" href="#top"><span aria-hidden="true" class="brand-mark"><img src="assets/dayz-logo-mark.png" width="57" height="35" alt=""/></span><span>DayZ <strong>Companion</strong></span></a><nav aria-label="Основная навигация" class="links"><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Поддержать проект</a><a class="navcta" href="#download">Загрузить</a></nav><div class="lang-switch" role="group" aria-label="Язык сайта"><button type="button" class="lang-option is-active" data-site-lang="ru" aria-pressed="true" aria-label="Русский язык" title="Русский">RU</button><button type="button" class="lang-option" data-site-lang="en" aria-pressed="false" aria-label="English language" title="English">EN</button></div><details class="mobile-menu"><summary>Меню ☰</summary><nav><a href="#tools">Инструменты</a><a href="#download">Скачать</a><a href="#support">Поддержка</a><a href="#donate">Поддержать проект</a></nav></details></div></header>
 <main id="top">
 <div class="hero"><img alt="Выживший на фоне заката" class="hero-art" fetchpriority="high" height="821" src="assets/hero.webp" width="1916"/><div class="wrap hero-inner"><div><div class="eyebrow">Компаньон для DayZ · Windows</div>
 <div class="hero-slides" aria-label="Преимущества DayZ Companion">
@@ -300,7 +384,7 @@ details.faq-item p { font-size: 15px; color: #c6d0d9; line-height: 1.66; margin:
 <article class="tool" id="tool-auto-run"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-auto-run.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/auto-run.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Автобег</h3><p class="tool-short">Преодолевайте большие расстояния без постоянного удержания клавиш.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-auto-run"><p>Большие карты DayZ требуют долгих переходов. Включите автобег, и персонаж продолжит движение без удержания кнопок на клавиатуре. Направляйте его мышью и при необходимости корректируйте маршрут.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Автобег" aria-controls="description-auto-run"></button></article>
 <article class="tool" id="tool-crosshair"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-crosshair.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/crosshair.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Экранный прицел</h3><p class="tool-short">Настраиваемая точка или перекрестие в центре игрового экрана.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-crosshair"><p>Показывает поверх игры компактный прицел — точку или перекрестие. Доступны настройки формы, цвета, размера и положения, чтобы выбрать удобный ориентир в центре экрана.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Экранный прицел" aria-controls="description-crosshair"></button></article>
 <article class="tool" id="tool-code-lock"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-code-lock.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/code-lock.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Кодлок</h3><p class="tool-short">Автоматический ввод шестизначного кода замка одной клавишей.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-code-lock"><p>Сохраните шестизначный код и назначьте горячую клавишу. Подойдите к замку: Companion введёт комбинацию и подтвердит её нажатием Enter. Не нужно каждый раз вспоминать и набирать длинный код вручную.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Кодлок" aria-controls="description-code-lock"></button></article>
-<article class="tool" id="tool-xam-map"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-xam-map.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/xam-map.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Карта XAM</h3><p class="tool-short">Подробная интерактивная карта DayZ прямо поверх игры.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-xam-map"><p>Открывайте карту поверх DayZ без постоянного переключения в браузер. Выбирайте Чернарусь, Ливонию, Сахал, Nasdara и другие доступные карты. Изучайте метки лута и важных объектов, чтобы планировать маршруты.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Карта XAM" aria-controls="description-xam-map"></button></article>
+<article class="tool" id="tool-xam-map"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-xam-map.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/xam-map.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Карты</h3><p class="tool-short">Игровые карты DayZ для удобной ориентации на местности.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-xam-map"><p>Просматривайте карты игровых локаций и используйте их для ориентирования в DayZ. Раздел сейчас обновляется: список карт, меток и доступные возможности могут измениться после тестирования.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Карты" aria-controls="description-xam-map"></button></article>
 <article class="tool" id="tool-auto-lean"><img alt="" class="tool-art" decoding="async" loading="lazy" src="assets/tool-auto-lean.webp" width="1672" height="941"/><span class="tool-icon" aria-hidden="true"><img src="assets/ui-icons/auto-lean.svg" alt="" width="24" height="24" decoding="async"/></span><h3>Автонаклон</h3><p class="tool-short">Автоматический наклон персонажа при движении влево и вправо.</p><span class="tool-action" aria-hidden="true">Подробнее <span>↗</span></span><div class="tool-extra" id="description-auto-lean"><p>При движении на A или D персонаж автоматически наклоняется соответственно влево или вправо. Это помогает выглядывать из-за углов и двигаться возле укрытий, меняя положение тела. Возможность проходит тестирование в 1.7.0 TEST.</p></div><button class="tool-toggle" type="button" aria-expanded="false" aria-label="Показать подробности: Автонаклон" aria-controls="description-auto-lean"></button></article>
 </div><p class="tools-note">Описание возможностей проекта. Часть функций и новый интерфейс проходят тестирование для версии 1.7.0 TEST; текущая загрузка — STABLE v1.6.4.</p></div></section>
 <section class="band"><div class="wrap feature-row"><div class="feature"><span class="feature-icon">▤</span><b>Все настройки под рукой</b><p>Единый интерфейс управления вместо множества отдельных окон.</p></div><div class="feature"><span class="feature-icon">⌘</span><b>Горячие клавиши</b><p>Настраиваемые действия для доступных инструментов.</p></div><div class="feature"><span class="feature-icon">▧</span><b>Диагностика и помощь</b><p>Подготовка технического отчёта и обращения разработчику.</p></div></div></section>
@@ -326,14 +410,19 @@ document.querySelectorAll('.tool').forEach(card => {
   control.addEventListener('click', () => {
     const opened = card.classList.toggle('is-open');
     control.setAttribute('aria-expanded', String(opened));
-    control.setAttribute('aria-label', `${opened ? 'Свернуть' : 'Показать'} подробности: ${card.querySelector('h3').textContent}`);
+    const english = document.documentElement.lang === 'en';
+    const action = english ? (opened ? 'Hide details' : 'Show details') : (opened ? 'Свернуть' : 'Показать');
+    control.setAttribute('aria-label', `${action}: ${card.querySelector('h3').textContent}`);
   });
 });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     document.querySelectorAll('.tool.is-open').forEach(card => {
       card.classList.remove('is-open');
-      card.querySelector('.tool-toggle').setAttribute('aria-expanded', 'false');
+      const control = card.querySelector('.tool-toggle');
+      control.setAttribute('aria-expanded', 'false');
+      const action = document.documentElement.lang === 'en' ? 'Show details' : 'Показать';
+      control.setAttribute('aria-label', `${action}: ${card.querySelector('h3').textContent}`);
     });
   }
 });
@@ -379,4 +468,5 @@ document.addEventListener('keydown', e => {
   start();
 })();
 </script>
+<script src="assets/site-i18n.js"></script>
 </body></html>
