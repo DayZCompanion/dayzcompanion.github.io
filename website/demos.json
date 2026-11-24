@@ -1,0 +1,48 @@
+{
+  "magnifier": {
+    "ru": {
+      "file": "stable-magnifier-ru.webp",
+      "thumb": "stable-magnifier-ru-800.webp",
+      "width": 1100,
+      "height": 700
+    }
+  },
+  "morse": {
+    "ru": {
+      "file": "stable-morse-ru.webp",
+      "thumb": "stable-morse-ru-800.webp",
+      "width": 1100,
+      "height": 700
+    }
+  },
+  "gamma": {
+    "ru": {
+      "file": "stable-gamma-ru.webp",
+      "thumb": "stable-gamma-ru-800.webp",
+      "width": 1100,
+      "height": 700
+    }
+  },
+  "code-lock": {
+    "ru": {
+      "file": "stable-code-lock-ru.webp",
+      "thumb": "stable-code-lock-ru-800.webp",
+      "width": 1100,
+      "height": 700
+    }
+  },
+  "auto-lean": {
+    "ru": {
+      "file": "stable-auto-lean-ru.webp",
+      "thumb": "stable-auto-lean-ru-800.webp",
+      "width": 1100,
+      "height": 700
+    }
+  },
+  "hud": {
+    "file": "morse-hud.webp",
+    "thumb": "morse-hud-800.webp",
+    "width": 2560,
+    "height": 1440
+  }
+}

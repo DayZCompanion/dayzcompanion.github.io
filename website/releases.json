@@ -1,0 +1,36 @@
+[
+  {
+    "version": "1.7.0",
+    "channel": "STABLE",
+    "date": "2026-11-20",
+    "platform": "Windows x64",
+    "bytes": 281107758,
+    "zip": "https://github.com/Surik115/dayz-companion-releases/releases/download/v1.7.0/DayZCompanion-1.7.0-Windows.zip",
+    "url": "https://github.com/Surik115/dayz-companion-releases/releases/tag/v1.7.0",
+    "sha256": "7351b3ed00c61461bc40f4f2c1a10cd2f8e645c20aa33a78315ab8a43eee96f7",
+    "notes": {
+      "ru": "Центр управления объединяет девять инструментов, настройки и обслуживание. В комплекте полный Windows ZIP, подписанный обновлятор и отдельный пакет перехода со старой установки.",
+      "en": "The control centre brings nine tools, settings and maintenance together. The release includes the full Windows ZIP, a signed updater and a separate migration package for older installations."
+    }
+  },
+  {
+    "version": "1.6.4",
+    "channel": "STABLE",
+    "date": "2026-11-05",
+    "url": "https://github.com/Surik115/dayz-companion-releases/releases/tag/v1.6.4",
+    "notes": {
+      "ru": "Обновлятор заменяет программу в её текущей папке и сохраняет пользовательские настройки и историю Nasdara. Для старых установок выпущен отдельный комплект Update-Existing.",
+      "en": "The updater replaces the app in its existing folder and keeps user settings and Nasdara history. A separate Update-Existing package is available for older installations."
+    }
+  },
+  {
+    "version": "1.6.1",
+    "channel": "STABLE",
+    "date": "2026-10-26",
+    "url": "https://github.com/Surik115/dayz-companion-releases/releases/tag/v1.6.1",
+    "notes": {
+      "ru": "Стабильный выпуск с полным архивом Windows и отдельным обновлятором. Подпись Ed25519 позволяет проверять подлинность метаданных обновления.",
+      "en": "A stable release with a full Windows archive and a separate updater. An Ed25519 signature verifies the authenticity of update metadata."
+    }
+  }
+]

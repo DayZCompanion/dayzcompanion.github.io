@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d0f10">
+  <title>Декодер Морзе Nasdara для DayZ — DayZ Companion</title>
+  <meta name="description" content="Декодируйте цифровое радио Nasdara в DayZ. Как запустить прослушивание, посмотреть координаты и код в интерфейсе или HUD.">
+  <link rel="canonical" href="https://dayz-mod.ru/tools/morse/">
+  <link rel="alternate" hreflang="ru" href="https://dayz-mod.ru/tools/morse/">
+  <link rel="alternate" hreflang="en" href="https://dayz-mod.ru/en/tools/morse/">
+  <link rel="alternate" hreflang="x-default" href="https://dayz-mod.ru/tools/morse/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DayZ Companion">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:url" content="https://dayz-mod.ru/tools/morse/">
+  <meta property="og:title" content="Декодер Морзе Nasdara для DayZ — DayZ Companion">
+  <meta property="og:description" content="Декодируйте цифровое радио Nasdara в DayZ. Как запустить прослушивание, посмотреть координаты и код в интерфейсе или HUD.">
+  <meta property="og:image" content="https://dayz-mod.ru/assets/stable-morse-ru.webp">
+  <meta property="og:image:alt" content="Дешифратор Морзе в Companion 1.7.0 STABLE">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Декодер Морзе Nasdara для DayZ — DayZ Companion">
+  <meta name="twitter:description" content="Декодируйте цифровое радио Nasdara в DayZ. Как запустить прослушивание, посмотреть координаты и код в интерфейсе или HUD.">
+  <meta name="twitter:image" content="https://dayz-mod.ru/assets/stable-morse-ru.webp">
+  <meta name="twitter:image:alt" content="Дешифратор Морзе в Companion 1.7.0 STABLE">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/site.css?v=9382a6f86637">
+  <noscript><style>@media(max-width:820px){.shell-row{flex-wrap:wrap}.mobile-menu{display:none}.navigation{display:flex;flex-wrap:wrap;align-items:center;gap:0 12px;position:static;flex-basis:100%;max-height:none;overflow:visible}}</style></noscript>
+  <script src="/assets/site.js?v=f3d6492dd5b0" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Перейти к содержанию</a>
+<header class="shell"><div class="wrap shell-row"><a class="wordmark" href="/"><img src="/assets/dayz-logo-mark.png" alt="" width="42" height="32">DayZ Companion</a><button type="button" class="mobile-menu" aria-expanded="false" aria-controls="navigation" data-open="Открыть меню" data-close="Закрыть меню">Меню</button>
+<nav class="navigation" id="navigation" aria-label="Основная навигация"><a href="/">Главная</a><details class="nav-tools"><summary class="current-group">Инструменты</summary><div class="tool-pop"><a href="/tools/magnifier/"><img src="/assets/icons-v2/magnifier.svg" alt="" loading="lazy">Дополнительная оптика</a>
+<a href="/tools/morse/" aria-current="page"><img src="/assets/icons-v2/morse.svg" alt="" loading="lazy">Морзе / Nasdara</a>
+<a href="/tools/gamma/"><img src="/assets/icons-v2/gamma.svg" alt="" loading="lazy">Гамма</a>
+<a href="/tools/earplugs/"><img src="/assets/icons-v2/earplugs.svg" alt="" loading="lazy">Беруши</a>
+<a href="/tools/auto-run/"><img src="/assets/icons-v2/auto-run.svg" alt="" loading="lazy">Автобег</a>
+<a href="/tools/crosshair/"><img src="/assets/icons-v2/crosshair.svg" alt="" loading="lazy">Экранный прицел</a>
+<a href="/tools/code-lock/"><img src="/assets/icons-v2/code-lock.svg" alt="" loading="lazy">Кодлок</a>
+<a href="/tools/xam-map/"><img src="/assets/icons-v2/xam-map.svg" alt="" loading="lazy">Карты XAM</a>
+<a href="/tools/auto-lean/"><img src="/assets/icons-v2/auto-lean.svg" alt="" loading="lazy">Автонаклон</a></div></details><a href="/about/">О проекте</a><a href="/download/">Скачать</a><span class="lang" role="group" aria-label="Язык"><span aria-current="true">RU</span><span aria-hidden="true">/</span><a data-language-link data-anchors="main capabilities demo guide processing faq related download" href="/en/tools/morse/" lang="en" hreflang="en">EN</a></span></nav></div></header>
+<main id="main" tabindex="-1">
+<section class="hero hero-art feature-hero" style="--hero-image: url(/assets/tool-morse.webp)"><div class="wrap hero-grid"><div class="hero-copy"><div class="hero-identity"><img src="/assets/icons-v2/morse.svg" alt="">Инструмент DayZ Companion</div><h1>Морзе / Nasdara</h1><p class="lead">Декодируйте цифровые радиопередачи Nasdara и смотрите координаты и код в Companion.</p><div class="actions"><a href="#guide" class="btn primary">Перейти к инструкции</a><a href="#demo" class="btn secondary">Посмотреть интерфейс</a></div></div><div class="hero-visual"><strong>От сигнала до координат</strong><p>Companion считывает звук процесса DayZ и показывает распознанный результат.</p></div></div></section>
+<nav class="wrap jump" aria-label="На этой странице"><a href="#capabilities">Возможности</a><a href="#demo">Интерфейс и HUD</a><a href="#guide">Инструкция</a><a href="#processing">Принцип и ограничения</a><a href="#faq">Вопросы</a></nav>
+<section id="capabilities" class="band"><div class="wrap">
+<div class="split"><h2>Что умеет декодер</h2><ul class="facts"><li><h3>Распознаёт цифровой сигнал</h3><p>Инструмент разбирает последовательности коротких и длинных звуков и собирает координаты и код.</p></li>
+<li><h3>Показывает результат в игре</h3><p>Экранный HUD выводит результат в игровом сеансе. Полные передачи можно посмотреть в журнале Companion.</p></li>
+<li><h3>Помогает сверить координаты</h3><p>Используйте распознанные координаты, чтобы свериться с картой используемого сервера.</p></li></ul></div>
+</div></section>
+<section id="demo" class="band alt"><div class="wrap">
+<div class="section-head"><h2>Интерфейс и HUD</h2><p>Откройте снимок, чтобы рассмотреть элементы управления и вывод декодера.</p></div><div class="gallery equal" data-gallery><figure><a class="shot-btn" href="/assets/stable-morse-ru.webp" data-shot data-title="Дешифратор Морзе в Companion 1.7.0 STABLE" aria-label="Увеличить: Дешифратор Морзе в Companion 1.7.0 STABLE"><img src="/assets/stable-morse-ru-800.webp" class="contain" width="1100" height="700" alt="Дешифратор Морзе в Companion 1.7.0 STABLE" loading="lazy" decoding="async"></a><figcaption>Дешифратор Морзе в Companion 1.7.0 STABLE</figcaption></figure>
+<figure><a class="shot-btn" href="/assets/morse-hud.webp" data-shot data-title="HUD в игровой сессии" aria-label="Увеличить: HUD в игровой сессии"><img src="/assets/morse-hud-800.webp" class="contain" width="2560" height="1440" alt="HUD в игровой сессии" loading="lazy" decoding="async"></a><figcaption>HUD в игровой записи проекта. Версия Companion в кадре не указана.</figcaption></figure></div>
+</div></section>
+<section id="guide" class="band"><div class="wrap">
+<div class="section-head single"><h2>Как принять передачу</h2></div><ol class="steps"><li><h3>Подготовьте игру</h3><p>Запустите DayZ, войдите на сервер Nasdara и настройте игровое радио на 80,0 МГц.</p></li>
+<li><h3>Начните прослушивание</h3><p>Откройте «Дешифратор Морзе» в Companion. Включите прослушивание кнопкой или назначенной горячей клавишей.</p></li>
+<li><h3>Проверьте результат</h3><p>Дождитесь завершения передачи. Сверьте координаты и код в интерфейсе или в HUD.</p></li></ol>
+</div></section>
+<section id="processing" class="band alt"><div class="wrap">
+<div class="split"><div class="stack"><h2>Как работает декодер</h2><p class="lead">Звук DayZ → распознавание сигналов → координаты и код.</p></div><ul class="facts"><li><h3>Источник звука</h3><p>Используется захват звука выбранного процесса через Windows WASAPI. Микрофон и общий системный звук для распознавания не используются.</p></li>
+<li><h3>Обработка сигнала</h3><p>Декодер локально выделяет короткие и длинные сигналы. Полная цифровая передача содержит шесть цифр координат и четыре цифры кода.</p></li>
+<li><h3>Ограничения</h3><p>Модулю нужен поддерживаемый режим захвата и запущенный DayZ. На Windows 10 22H2 совместимость проверяется при запуске прослушивания. На результат влияет чистота сигнала.</p></li></ul></div>
+</div></section>
+
+<section id="faq" class="band alt"><div class="wrap">
+<div class="split"><h2>Частые вопросы</h2><div class="questions"><details><summary>Что делать, если декодер не получает сигнал?</summary><p>Убедитесь, что Companion видит процесс DayZ, прослушивание запущено, а игровое радио настроено на 80,0 МГц. Проверьте сообщение состояния в декодере.</p></details>
+<details><summary>Где посмотреть предыдущую передачу?</summary><p>Откройте журнал в Companion. Туда попадают полные распознанные передачи.</p></details>
+<details><summary>Куда нанести координаты?</summary><p>Сверьте их с картой своего сервера. Собственная карта бункеров Nasdara описана в <a href="/tools/xam-map/#nasdara" class="text-link">разделе карт</a>.</p></details></div></div>
+</div></section>
+<section id="related" class="band"><div class="wrap">
+<div class="section-head single"><h2>Другие инструменты</h2></div><div class="tool-grid"><a class="tool-card" href="/tools/xam-map/"><img src="/assets/icons-v2/xam-map.svg" alt=""><div><b>Карты XAM</b><p>Открывайте карты стороннего сервиса XAM.</p></div><span class="arrow" aria-hidden="true">›</span></a>
+<a class="tool-card" href="/tools/earplugs/"><img src="/assets/icons-v2/earplugs.svg" alt=""><div><b>Беруши</b><p>Убавляйте громкость игры по горячей клавише.</p></div><span class="arrow" aria-hidden="true">›</span></a>
+<a class="tool-card" href="/tools/magnifier/"><img src="/assets/icons-v2/magnifier.svg" alt=""><div><b>Дополнительная оптика</b><p>Приближайте выбранную область игрового экрана.</p></div><span class="arrow" aria-hidden="true">›</span></a></div>
+</div></section>
+<section id="download" class="band alt"><div class="wrap">
+<div class="callout"><div><h2>Декодер входит в DayZ Companion</h2><p>На странице скачивания доступны актуальная сборка и инструкция первого запуска.</p></div><a href="/download/" class="btn primary">Скачать</a></div>
+</div></section>
+</main>
+<footer class="site-footer"><div class="wrap footer-row"><div><a class="wordmark" href="/"><img src="/assets/dayz-logo-mark.png" alt="" width="42" height="32">DayZ Companion</a><p class="caption">Независимый проект для игроков DayZ</p></div><nav aria-label="Ссылки в подвале"><a href="/#tools">Инструменты</a><a href="/about/">О проекте</a><a href="/download/">Скачать</a><a href="https://forms.yandex.ru/u/6af9b3a7974ab27c31e6bfa4/" data-metrika-goal="support_click">Обратная связь</a></nav></div></footer>
+<dialog class="lightbox" aria-labelledby="lightbox-title"><div class="lightbox-bar"><p id="lightbox-title" aria-live="polite"></p><div class="lightbox-keys"><button type="button" data-prev aria-label="Предыдущий снимок">←</button><button type="button" data-next aria-label="Следующий снимок">→</button><button type="button" data-close aria-label="Закрыть просмотр">×</button></div></div><img class="lightbox-image" alt=""></dialog>
+<aside class="cookie-notice" aria-labelledby="cookie-notice-title" hidden><div><strong id="cookie-notice-title">Cookie и аналитика</strong><p>Мы используем файлы cookie и Яндекс Метрику, чтобы измерять посещаемость и понимать, как посетители пользуются сайтом. <a href="https://yandex.ru/support/metrica/ru/general/cookie-usage" class="text-link">Как Метрика использует cookie</a>.</p></div><button class="btn secondary" type="button">Понятно</button></aside>
+<!-- production-metrika --><noscript><div><img src="https://mc.yandex.ru/watch/114496162" class="metrika-fallback" alt=""></div></noscript><!-- /production-metrika -->
+</body>
+</html>

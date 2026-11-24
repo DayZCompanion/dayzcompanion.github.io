@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://dayz-mod.ru/</loc>
-  </url>
-  <url>
-    <loc>https://dayz-mod.ru/en/</loc>
-  </url>
+  <url><loc>https://dayz-mod.ru/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/magnifier/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/magnifier/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/morse/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/morse/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/gamma/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/gamma/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/earplugs/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/earplugs/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/auto-run/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/auto-run/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/crosshair/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/crosshair/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/code-lock/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/code-lock/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/xam-map/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/xam-map/</loc></url>
+  <url><loc>https://dayz-mod.ru/tools/auto-lean/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/tools/auto-lean/</loc></url>
+  <url><loc>https://dayz-mod.ru/download/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/download/</loc></url>
+  <url><loc>https://dayz-mod.ru/about/</loc></url>
+  <url><loc>https://dayz-mod.ru/en/about/</loc></url>
 </urlset>

@@ -1,120 +1,157 @@
 (() => {
-  const pageUrl = new URL(location.href);
-  if (document.documentElement.lang === 'ru' && pageUrl.searchParams.get('lang') === 'en') {
-    pageUrl.pathname = '/en/';
-    pageUrl.searchParams.delete('lang');
-    location.replace(pageUrl);
+  const url = new URL(location.href);
+  const onProduction = url.origin === 'https://dayz-mod.ru';
+  if ((url.pathname === '/' || url.pathname === '/index.html') && url.searchParams.get('lang') === 'en') {
+    url.pathname = '/en/';
+    url.searchParams.delete('lang');
+    location.replace(url);
     return;
   }
 
-  const languageLinks = document.querySelectorAll('[data-language-link]');
-  function updateLanguageLinks() {
-    languageLinks.forEach(link => {
-      link.hash = location.hash;
+  const langLink = document.querySelector('[data-language-link]');
+  const allowedAnchors = new Set(langLink.dataset.anchors.split(' '));
+  function syncLanguageLink() {
+    const alternate = new URL(langLink.href);
+    const query = new URLSearchParams(location.search);
+    query.delete('lang');
+    alternate.search = query.toString();
+    const anchor = location.hash.slice(1);
+    alternate.hash = allowedAnchors.has(anchor) ? anchor : '';
+    langLink.href = alternate.href;
+  }
+  syncLanguageLink();
+  window.addEventListener('hashchange', syncLanguageLink);
+
+  const navigation = document.querySelector('#navigation');
+  const mobileMenu = document.querySelector('.mobile-menu');
+  const toolsMenu = document.querySelector('.nav-tools');
+  const toolTrigger = toolsMenu.querySelector('summary');
+  const mobile = window.matchMedia('(max-width: 820px)');
+
+  function setMobileMenu(open, restore = false) {
+    const wasOpen = navigation.classList.contains('open');
+    mobileMenu.setAttribute('aria-expanded', String(open));
+    mobileMenu.setAttribute('aria-label', open ? mobileMenu.dataset.close : mobileMenu.dataset.open);
+    navigation.classList.toggle('open', open);
+    if (!open && mobile.matches) toolsMenu.open = false;
+    if (!open && wasOpen && restore) mobileMenu.focus();
+  }
+  setMobileMenu(false);
+
+  mobileMenu.addEventListener('click', () => setMobileMenu(!navigation.classList.contains('open'), true));
+  document.addEventListener('click', event => {
+    if (toolsMenu.open && !toolsMenu.contains(event.target)) {
+      if (toolsMenu.contains(document.activeElement)) toolTrigger.focus();
+      toolsMenu.open = false;
+    }
+    if (!event.target.closest('.shell')) {
+      setMobileMenu(false, navigation.contains(document.activeElement));
+    }
+  });
+  mobile.addEventListener('change', () => {
+    const wasInNavigation = navigation.contains(document.activeElement);
+    toolsMenu.open = false;
+    setMobileMenu(false, mobile.matches && wasInNavigation);
+    if (mobile.matches && wasInNavigation) mobileMenu.focus();
+    if (!mobile.matches && document.activeElement === mobileMenu) navigation.querySelector('a').focus();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || document.querySelector('dialog[open]')) return;
+    if (toolsMenu.open) {
+      toolsMenu.open = false;
+      toolTrigger.focus();
+    } else {
+      setMobileMenu(false, true);
+    }
+  });
+
+  const lightbox = document.querySelector('.lightbox');
+  if (lightbox && typeof lightbox.showModal === 'function') {
+    const title = lightbox.querySelector('#lightbox-title');
+    const image = lightbox.querySelector('.lightbox-image');
+    const close = lightbox.querySelector('[data-close]');
+    const previous = lightbox.querySelector('[data-prev]');
+    const next = lightbox.querySelector('[data-next]');
+    let shots, index, opener;
+
+    function showShot(position) {
+      index = (position + shots.length) % shots.length;
+      const shot = shots[index];
+      title.textContent = shot.dataset.title;
+      image.alt = shot.dataset.title;
+      image.src = shot.href;
+    }
+    document.querySelectorAll('[data-gallery]').forEach(gallery => {
+      const items = [...gallery.querySelectorAll('[data-shot]')];
+      items.forEach((shot, position) => shot.addEventListener('click', event => {
+        if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+        event.preventDefault();
+        shots = items;
+        opener = shot;
+        previous.hidden = next.hidden = items.length < 2;
+        showShot(position);
+        lightbox.showModal();
+        close.focus();
+      }));
+    });
+    previous.addEventListener('click', () => showShot(index - 1));
+    next.addEventListener('click', () => showShot(index + 1));
+    close.addEventListener('click', () => lightbox.close());
+    lightbox.addEventListener('close', () => opener?.focus());
+    lightbox.addEventListener('click', event => {
+      if (event.target === lightbox) lightbox.close();
+    });
+    lightbox.addEventListener('keydown', event => {
+      if (shots.length < 2) return;
+      if (event.key === 'ArrowLeft') showShot(index - 1);
+      if (event.key === 'ArrowRight') showShot(index + 1);
     });
   }
-  updateLanguageLinks();
-  window.addEventListener('hashchange', updateLanguageLinks);
 
   const notice = document.querySelector('.cookie-notice');
-  const dismiss = notice.querySelector('button');
   const noticeKey = 'dayz-companion-cookie-notice-dismissed';
   try {
     notice.hidden = localStorage.getItem(noticeKey) === '1';
   } catch {
-    // Browsers can block access to local storage.
+    notice.hidden = false;
   }
-  if (!notice.hidden) {
-    notice.classList.add('is-floating');
-    dismiss.hidden = false;
-    dismiss.addEventListener('click', () => {
-      notice.hidden = true;
-      try {
-        localStorage.setItem(noticeKey, '1');
-      } catch {
-        // The notice still closes for the current page.
-      }
-    });
-  }
-
-  (function(m,e,t,r,i,k,a){
-          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=114496162', 'ym');
-
-      ym(114496162, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-
-  // Native pointer hover is handled in CSS. On touch screens, cards toggle on tap.
-  document.querySelectorAll('.tool').forEach(card => {
-    const control = card.querySelector('.tool-toggle');
-    control.addEventListener('click', () => {
-      const opened = card.classList.toggle('is-open');
-      control.setAttribute('aria-expanded', String(opened));
-      const english = document.documentElement.lang === 'en';
-      const action = english ? (opened ? 'Hide details' : 'Show details') : (opened ? 'Свернуть' : 'Показать подробности');
-      control.setAttribute('aria-label', `${action}: ${card.querySelector('h3').textContent}`);
-    });
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.tool.is-open').forEach(card => {
-        card.classList.remove('is-open');
-        const control = card.querySelector('.tool-toggle');
-        control.setAttribute('aria-expanded', 'false');
-        const action = document.documentElement.lang === 'en' ? 'Show details' : 'Показать подробности';
-        control.setAttribute('aria-label', `${action}: ${card.querySelector('h3').textContent}`);
-      });
+  notice.querySelector('button').addEventListener('click', () => {
+    notice.hidden = true;
+    try {
+      localStorage.setItem(noticeKey, '1');
+    } catch {
+      // Closing the notice still works for this page.
     }
   });
 
-  // Small copy rotator only; background and CTA buttons never change.
-  (() => {
-    const slides = [...document.querySelectorAll('.hero-slide')];
-    const dots = [...document.querySelectorAll('.hero-dot')];
-    const hero = document.querySelector('.hero-inner');
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let index = 0;
-    let timer = null;
-    let paused = false;
-    function show(next) {
-      index = (next + slides.length) % slides.length;
-      slides.forEach((slide, i) => {
-        const active = i === index;
-        slide.classList.toggle('is-active', active);
-        slide.setAttribute('aria-hidden', String(!active));
-        dots[i].classList.toggle('is-active', active);
-        dots[i].setAttribute('aria-pressed', String(active));
-      });
-    }
-    function stop() { if (timer !== null) { clearInterval(timer); timer = null; } }
-    function start() {
-      stop();
-      if (!reduceMotion.matches && !paused && !document.hidden) {
-        timer = setInterval(() => show(index + 1), 6500);
-      }
-    }
-    dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); start(); }));
-    hero.addEventListener('mouseenter', () => { paused = true; stop(); });
-    hero.addEventListener('mouseleave', () => { paused = false; start(); });
-    hero.addEventListener('focusin', () => { paused = true; stop(); });
-    hero.addEventListener('focusout', () => {
-      if (!hero.contains(document.activeElement)) { paused = false; start(); }
+  const counter = 114496162;
+  const isPreview = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+  if (onProduction) {
+    window.ym = window.ym || function (...args) { (window.ym.a ||= []).push(args); };
+    window.ym.l = Date.now();
+    const tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://mc.yandex.ru/metrika/tag.js?id=' + counter;
+    document.head.append(tag);
+    window.ym(counter, 'init', {
+      ssr: true, webvisor: true, clickmap: true, ecommerce: 'dataLayer',
+      referrer: document.referrer, url: location.href, accurateTrackBounce: true,
+      trackLinks: false,
     });
-    document.addEventListener('visibilitychange', start);
-    reduceMotion.addEventListener('change', () => {
-      if (reduceMotion.matches) show(0);
-      start();
-    });
-    start();
-  })();
+  } else if (isPreview) {
+    window.dayzPreviewEvents = [];
+  }
 
-  document.querySelectorAll('a[data-metrika-goal]').forEach((link) => {
-      link.addEventListener('click', () => {
-        if (typeof ym === 'function') {
-          ym(114496162, 'reachGoal', link.dataset.metrikaGoal);
-        }
-      });
-    });
+  function track(event) {
+    const link = event.target.closest('a[data-metrika-goal]');
+    if (!link || event.defaultPrevented) return;
+    const goal = link.dataset.metrikaGoal;
+    const params = link.dataset.releaseVersion ? { version: link.dataset.releaseVersion } : {};
+    if (onProduction) window.ym(counter, 'reachGoal', goal, params);
+    if (isPreview) window.dayzPreviewEvents.push({ goal, ...params });
+  }
+  document.addEventListener('click', track);
+  document.addEventListener('auxclick', event => {
+    if (event.button === 1) track(event);
+  });
 })();
