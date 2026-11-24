@@ -5,13 +5,14 @@ import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
-import { archive, languages, localizedLinks, origin, pages, route, screenshotRelease } from './registry.mjs';
+import { archive, languages, localizedLinks, orderReleases, origin, pages, route, screenshotRelease } from './registry.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const base = process.argv[2] ?? 'http://127.0.0.1:18170';
 const allRoutes = pages.flatMap(page => languages.map(lang => ({ page, lang, url: route(page.id, lang) })));
 const initial = await readFile(join(root, 'website/releases.json'), 'utf8');
-const current = JSON.parse(initial)[0];
+const records = orderReleases(JSON.parse(initial));
+const current = records[0];
 const expected = new Set(allRoutes.map(({ url }) => origin + url));
 
 function content(path) {
@@ -64,7 +65,7 @@ const testRecord = {
   url: archive + '/tag/v' + hypothetical,
   zip: archive + '/download/v' + hypothetical + '/DayZCompanion-' + hypothetical + '-Windows.zip',
 };
-await writeFile(testReleases, JSON.stringify([testRecord, ...JSON.parse(initial)]));
+await writeFile(testReleases, JSON.stringify([testRecord, ...records]));
 const hash = text => createHash('sha256').update(text).digest('hex');
 const baseline = await Promise.all(allRoutes.map(({ url }) => content(url).then(hash)));
 const result = spawnSync(process.execPath, [join(root, 'website/build.mjs')], {
@@ -81,7 +82,9 @@ for (const lang of languages) {
   assert(download.includes(testRecord.zip) && download.includes('321&nbsp;'));
   assert(download.includes('data-release-version="' + hypothetical + '"'));
   assert(download.includes(hypothetical + ' STABLE') && download.includes('datetime="' + current.date + '"'));
-  assert(download.includes(current.url) && download.includes('/tag/v1.6.4') && download.includes('/tag/v1.6.1'));
+  for (const release of records) {
+    assert(download.includes(release.url) && download.includes('datetime="' + release.date + '"'));
+  }
   assert(!download.includes(current.zip));
 }
 assert.equal(await readFile(join(root, 'website/releases.json'), 'utf8'), initial);

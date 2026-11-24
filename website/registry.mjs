@@ -46,6 +46,11 @@ export function route(id, lang) {
   return (lang === 'en' ? '/en' : '') + page.path;
 }
 
+export function orderReleases(records) {
+  return [...records].sort((a, b) =>
+    b.date.localeCompare(a.date) || b.version.localeCompare(a.version, 'en', { numeric: true }));
+}
+
 // Capture provenance is independent of the current release.
 export const screenshotRelease = '1.7.0';
 export const shots = Object.fromEntries(languages.map(lang => [

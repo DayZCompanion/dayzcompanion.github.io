@@ -4,7 +4,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { html, shell } from './components.mjs';
-import { archive, languages, links, localizedLinks, origin, pages, route, shots, tools } from './registry.mjs';
+import { archive, languages, links, localizedLinks, orderReleases, origin, pages, route, shots, tools } from './registry.mjs';
 import { demoFor, render } from './templates.mjs';
 import ru from './ru.mjs';
 import en from './en.mjs';
@@ -97,8 +97,8 @@ async function validateOutput() {
 
 async function build() {
   const releasePath = process.env.DAYZ_SITE_RELEASES ?? join(root, 'website/releases.json');
-  const releases = (await readJson(releasePath)).sort((a, b) =>
-    b.date.localeCompare(a.date) || b.version.localeCompare(a.version, 'en', { numeric: true }));
+  const records = await readJson(releasePath);
+  const releases = orderReleases(records);
   validateReleases(releases);
   const release = releases[0];
   validateCopy(locales.ru, locales.en, 'copy');
@@ -152,6 +152,11 @@ async function build() {
   }
   for (const [file, text] of files) {
     const path = join(output, file);
+    try {
+      if ((await readFile(path, 'utf8')).replaceAll('\r\n', '\n') === text) continue;
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
     await mkdir(dirname(path), { recursive: true });
     await writeFile(path, text);
   }

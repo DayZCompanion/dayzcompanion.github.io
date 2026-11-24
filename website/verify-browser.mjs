@@ -3,13 +3,14 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { languages, origin, pages, route } from './registry.mjs';
+import { languages, orderReleases, origin, pages, route } from './registry.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium, devices } = require(process.env.PLAYWRIGHT_MODULE ?? 'playwright');
 const base = process.argv[2] ?? 'http://127.0.0.1:18170';
 const evidence = process.argv[3];
 const root = fileURLToPath(new URL('../', import.meta.url));
+const [{ version }] = orderReleases(JSON.parse(await readFile(join(root, 'website/releases.json'), 'utf8')));
 const ids = ['home', 'morse', 'download', 'about'];
 const pagesToShow = pages.filter(page => ids.includes(page.id));
 const browser = await chromium.launch(process.env.EDGE_PATH ? { executablePath: process.env.EDGE_PATH } : {});
@@ -160,7 +161,7 @@ async function interactions() {
   await page.locator('.download-links a[href="#history"]').click();
   assert.equal(new URL(page.url()).hash, '#history');
   await page.locator('.release-panel [data-metrika-goal]').click({ noWaitAfter: true });
-  assert.deepEqual(await page.evaluate(() => window.dayzPreviewEvents), [{ goal: 'download_click', version: '1.7.0' }]);
+  assert.deepEqual(await page.evaluate(() => window.dayzPreviewEvents), [{ goal: 'download_click', version }]);
   assert.equal(external.some(url => url.includes('mc.yandex.ru')), false);
   pass('Preview goals fire once per external action, with no requests to Metrica');
   await context.close();
@@ -241,7 +242,7 @@ async function analytics() {
       assert.equal(init[0][2].trackLinks, false);
       await page.locator('.release-panel a.btn').click({ noWaitAfter: true });
       const goal = await page.evaluate(() => window.qaMetrika[1]);
-      assert.deepEqual(goal, [114496162, 'reachGoal', 'download_click', { version: '1.7.0' }]);
+      assert.deepEqual(goal, [114496162, 'reachGoal', 'download_click', { version }]);
     } else {
       assert.deepEqual(calls, ['/watch/114496162']);
     }
