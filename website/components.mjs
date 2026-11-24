@@ -54,8 +54,8 @@ export function components({ lang, copy, release }) {
     return '<' + tag + ' class="' + type + '">' + items.map(([title, description]) =>
       '<li>' + heading(3, title) + p(description) + '</li>').join('\n') + '</' + tag + '>';
   };
-  const faq = items => section('faq', split(ui.faq, '<div class="questions">' + items.map(([question, answer]) =>
-    '<details><summary>' + escape(question) + '</summary>' + p(answer) + '</details>').join('\n') + '</div>'), 'alt');
+  const faq = (items, extra = 'alt') => section('faq', split(ui.faq, '<div class="questions">' + items.map(([question, answer]) =>
+    '<details><summary>' + escape(question) + '</summary>' + p(answer) + '</details>').join('\n') + '</div>'), extra);
   const jump = (items, label = ui.jump, className = '') =>
     '<nav class="wrap jump' + (className ? ' ' + className : '') + '" aria-label="' + escape(label) + '">' +
     items.map(([id, label]) => link('#' + id, label)).join('') + '</nav>';
@@ -76,10 +76,11 @@ export function components({ lang, copy, release }) {
           '" alt="" loading="lazy" decoding="async" fetchpriority="low"></div><div class="tool-card-content">' + content + '</div>' : content) + '</a>';
     }).join('\n') + '</div>';
   }
-  function image(shot, label, isHero = false, className = '') {
+  function image(shot, label, isHero = false, className = '', carousel = false) {
     return '<img src="' + asset(shot.thumb) + '"' + (className ? ' class="' + className + '"' : '') +
       ' width="' + shot.width + '" height="' + shot.height + '" alt="' + escape(label) + '"' +
       (isHero ? ' srcset="' + asset(shot.mobile) + ' 480w, ' + asset(shot.thumb) + ' 800w" sizes="(max-width: 740px) 90vw, 660px"' : '') +
+      (carousel && shot.width > 800 ? ' srcset="' + asset(shot.thumb) + ' 800w, ' + asset(shot.file) + ' ' + shot.width + 'w" sizes="(max-width: 740px) 90vw, (max-width: 1600px) 67vw, 1050px"' : '') +
       (isHero ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"') + '>';
   }
   function gallery(items, equal = false) {
@@ -91,7 +92,21 @@ export function components({ lang, copy, release }) {
     const className = equal ? ' equal' : figures.length === 1 ? ' solo' : '';
     return '<div class="gallery' + className + '" data-gallery>' + layout + '</div>';
   }
-  return { url, escape, rich, link, p, heading, section, head, split, prose, features, faq, jump, button, callout, list, cards, image, gallery };
+  function demoCarousel(items) {
+    const title = lang === 'ru' ? 'Снимки интерфейса' : 'Interface screenshots';
+    const prev = lang === 'ru' ? 'Предыдущий снимок' : 'Previous screenshot';
+    const next = lang === 'ru' ? 'Следующий снимок' : 'Next screenshot';
+    const figures = items.map(({shot,label,caption}) => '<figure><a class="shot-btn" href="' + asset(shot.file) +
+      '" data-shot data-title="' + escape(label) + '" aria-label="' + escape(ui.zoom + ': ' + label) + '">' +
+      image(shot,label,false,'',true) + '</a><figcaption>' + escape(caption ?? label) + '</figcaption></figure>');
+    const controls = items.length > 1 ? '<div class="demo-carousel-controls" data-carousel-controls hidden>' +
+      '<button type="button" data-carousel-prev aria-label="' + escape(prev) + '">‹</button>' +
+      '<span data-carousel-count aria-live="polite" aria-atomic="true">1 / ' + items.length + '</span>' +
+      '<button type="button" data-carousel-next aria-label="' + escape(next) + '">›</button></div>' : '';
+    return '<div class="demo-carousel" data-gallery data-carousel role="group" aria-label="' + escape(title) +
+      '"><div class="demo-carousel-track" data-carousel-track>' + figures.join('\n') + '</div>' + controls + '</div>';
+  }
+  return { url, escape, rich, link, p, heading, section, head, split, prose, features, faq, jump, button, callout, list, cards, image, gallery, demoCarousel };
 }
 
 export function shell({ lang, copy, page, release, content, anchors, cssVersion, jsVersion, social }) {
@@ -149,10 +164,12 @@ export function shell({ lang, copy, page, release, content, anchors, cssVersion,
     escape(ui.footerNote) + '</p></div><nav aria-label="' + escape(ui.footer) + '">' + link('home#tools', ui.tools) +
     link('about', copy.about.name) + link('download', ui.download) + link('form', ui.feedback) + '</nav></div></footer>\n' +
     (content.includes('data-gallery') ? '<dialog class="lightbox" aria-labelledby="lightbox-title">' +
-      '<div class="lightbox-bar"><p id="lightbox-title" aria-live="polite"></p><div class="lightbox-keys">' +
-      [['prev', ui.prev, '←'], ['next', ui.next, '→'], ['close', ui.close, '×']].map(([id, label, key]) =>
-        '<button type="button" data-' + id + ' aria-label="' + escape(label) + '">' + key + '</button>').join('') +
-      '</div></div><img class="lightbox-image" alt=""></dialog>\n' : '') +
+      '<div class="lightbox-bar"><div class="lightbox-heading"><p id="lightbox-title" aria-live="polite"></p><span data-lightbox-count aria-live="polite"></span></div><div class="lightbox-keys">' +
+      [['zoom-out', lang === 'ru' ? '\u0423\u043c\u0435\u043d\u044c\u0448\u0438\u0442\u044c' : 'Zoom out', '&#8722;'], ['zoom-in', ui.zoom, '+'], ['close', ui.close, '&#215;']].map(([id,label,key]) =>
+        '<button type="button" data-' + id + ' aria-label="' + escape(label) + '" title="' + escape(label) + '">' + key + '</button>').join('') +
+      '</div></div><div class="lightbox-stage"><div class="lightbox-viewport" data-lightbox-viewport><img class="lightbox-image" alt="" draggable="false"></div>' +
+      [['prev', ui.prev, '&#8249;'], ['next', ui.next, '&#8250;']].map(([id,label,key]) => '<button type="button" data-' + id + ' class="lightbox-arrow" aria-label="' + escape(label) + '">' + key + '</button>').join('') +
+      '</div><div class="lightbox-thumbs" data-lightbox-thumbs role="group" aria-label="' + (lang === 'ru' ? '\u0421\u043d\u0438\u043c\u043a\u0438' : 'Screenshots') + '"></div></dialog>\n' : '') +
     '<aside class="cookie-notice" aria-labelledby="cookie-notice-title" hidden><div><strong id="cookie-notice-title">' +
     escape(ui.cookieTitle) + '</strong><p>' + rich(ui.cookie) + '</p></div><button class="btn secondary" type="button">' +
     escape(ui.dismiss) + '</button></aside>\n' +

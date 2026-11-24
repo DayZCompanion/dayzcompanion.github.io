@@ -5,7 +5,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { html, shell } from './components.mjs';
 import { archive, languages, links, localizedLinks, orderReleases, origin, pages, route, shots, tools } from './registry.mjs';
-import { demoFor, render } from './templates.mjs';
+import { render, socialDemoFor } from './templates.mjs';
 import ru from './ru.mjs';
 import en from './en.mjs';
 import toolsRu from './tools-ru.mjs';
@@ -121,7 +121,7 @@ async function build() {
       const url = route(page.id, lang);
       assert(/^\/(?:[a-z0-9-]+\/)*$/.test(url) && !urls.has(url), 'Invalid or duplicate route ' + url);
       urls.add(url);
-      const social = page.template === 'tool' ? demoFor(ctx)[0] :
+      const social = page.template === 'tool' ? socialDemoFor(ctx) :
         { shot: shots[lang].home, label: ctx.copy.home.shots.home };
       const otherLang = lang === 'ru' ? 'en' : 'ru';
       const alternateAnchors = anchors(pairs[otherLang].content);

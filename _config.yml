@@ -1,0 +1,5 @@
+exclude:
+  - website/
+  - docs/
+  - design/
+  - README.md

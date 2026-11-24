@@ -29,7 +29,7 @@ export default {
       diagnostics: 'Maintenance and support',
     },
     download: ['Download DayZ Companion', 'Get the current STABLE build, check the requirements and follow the first-run guide.'],
-    donate: ['Support development', 'DayZ Companion is free. Voluntary donations help fix bugs and improve the tools.', 'Support via CloudTips'],
+    donate: ['Support development', 'DayZ Companion is free. Voluntary donations help fix bugs and improve the tools.', 'Support the project'],
     feedback: 'Ask a question, suggest an improvement or report a bug. You can attach a screenshot or diagnostics archive.',
     materialsTitle: 'Useful guides',
     materials: [
@@ -58,14 +58,16 @@ export default {
       ['Windows 10 or 11, 64-bit', 'Install DayZ to use the in-game tools.'],
       ['Windowed DayZ', 'Use windowed mode for full tool support. Borderless windowed mode is recommended for overlays. Exclusive fullscreen can hide overlays and limit screen capture.'],
       ['Disk space', 'Allow about 1 GB for the ZIP and extracted files together, plus extra free space for updates.'],
-      ['Radio capture', 'Isolating DayZ audio requires a supported Windows WASAPI mode. On Windows 10 22H2, Companion checks compatibility when listening starts.'],
+      ['Radio capture', 'Isolated DayZ audio capture requires Windows build 20348 or later. On Windows 10 22H2 (19045), compatibility is checked when listening starts.'],
     ],
     steps: [
       ['Download the ZIP', 'Select “Download ZIP” at the top of this page.'],
       ['Extract the archive', 'Extract every file into a separate folder.'],
       ['Run DayZCompanion.exe', 'Open the executable from the extracted folder.'],
     ],
-    updateText: 'In Companion, open “About” and select “Check for updates”. Once the download finishes, close DayZ and follow the prompts.',
+    updateText: "In Companion, open About and select the update check button. If a new version is available, confirm the download and wait for it to finish. Close DayZ, then select Install update. Companion closes to install the new version. Do not turn off your computer or launch Companion again until installation finishes.",
+    updateSteps: [["Check for updates","Open About and select the update check button."],["Download the new version","If an update is available, confirm the download and wait for it to finish."],["Close DayZ","Exit the game before installing the new version."],["Install the update","Select Install update. Companion closes to install the new version."],["Wait for installation","Do not turn off your computer or launch Companion again until installation finishes."]],
+    updateNote: "Version 1.7.0 STABLE does not display separate installation progress after the app closes. This improvement is planned for a future update.",
     historyText: 'The main changes in stable releases. Each entry links to its files and notes on GitHub.',
     archive: 'Official GitHub releases', checksum: 'SHA-256 checksum',
     faq: [
@@ -102,7 +104,7 @@ export default {
       ['GitHub Releases', 'The official archive hosts stable builds and release history. [View official releases](archive).'],
       ['Yandex Forms', 'Use the form to report issues, leave positive feedback, suggest improvements or share ideas. [Open the feedback form](form).'],
     ],
-    donate: ['Support the developer via CloudTips', 'The developer plays DayZ and makes Companion available for free. CloudTips is a way to support work on the app voluntarily.'],
+    donate: ['Support development', 'The developer plays DayZ and makes Companion available for free. CloudTips is a way to support work on the app voluntarily.'],
     release: 'Full Windows ZIP and first-run instructions.',
   },
 };

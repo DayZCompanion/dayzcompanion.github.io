@@ -25,11 +25,11 @@
   <meta name="twitter:image:alt" content="Home in the control centre">
   <link rel="icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/assets/site.css?v=9382a6f86637">
+  <link rel="stylesheet" href="/assets/site.css?v=ba7618cc274e">
   <link rel="preload" as="image" href="/assets/home-valley-960.webp" media="(max-width: 820px)">
   <link rel="preload" as="image" href="/assets/home-valley.webp" media="(min-width: 821px)">
   <noscript><style>@media(max-width:820px){.shell-row{flex-wrap:wrap}.mobile-menu{display:none}.navigation{display:flex;flex-wrap:wrap;align-items:center;gap:0 12px;position:static;flex-basis:100%;max-height:none;overflow:visible}}</style></noscript>
-  <script src="/assets/site.js?v=f3d6492dd5b0" defer></script>
+  <script src="/assets/site.js?v=033f4ef1bc20" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -50,7 +50,7 @@
 <div class="split"><h2>System requirements</h2><ul class="facts"><li><h3>Windows 10 or 11, 64-bit</h3><p>Install DayZ to use the in-game tools.</p></li>
 <li><h3>Windowed DayZ</h3><p>Use windowed mode for full tool support. Borderless windowed mode is recommended for overlays. Exclusive fullscreen can hide overlays and limit screen capture.</p></li>
 <li><h3>Disk space</h3><p>Allow about 1 GB for the ZIP and extracted files together, plus extra free space for updates.</p></li>
-<li><h3>Radio capture</h3><p>Isolating DayZ audio requires a supported Windows WASAPI mode. On Windows 10 22H2, Companion checks compatibility when listening starts.</p></li></ul></div>
+<li><h3>Radio capture</h3><p>Isolated DayZ audio capture requires Windows build 20348 or later. On Windows 10 22H2 (19045), compatibility is checked when listening starts.</p></li></ul></div>
 </div></section>
 <section id="first" class="band"><div class="wrap">
 <div class="section-head single"><h2>First launch</h2></div><ol class="steps"><li><h3>Download the ZIP</h3><p>Select “Download ZIP” at the top of this page.</p></li>
@@ -58,7 +58,11 @@
 <li><h3>Run DayZCompanion.exe</h3><p>Open the executable from the extracted folder.</p></li></ol>
 </div></section>
 <section id="update" class="band alt"><div class="wrap">
-<div class="split"><h2>Updating</h2><div class="copy"><p>In Companion, open “About” and select “Check for updates”. Once the download finishes, close DayZ and follow the prompts.</p></div></div>
+<div class="section-head single"><h2>Updating</h2></div><ol class="steps"><li><h3>Check for updates</h3><p>Open About and select the update check button.</p></li>
+<li><h3>Download the new version</h3><p>If an update is available, confirm the download and wait for it to finish.</p></li>
+<li><h3>Close DayZ</h3><p>Exit the game before installing the new version.</p></li>
+<li><h3>Install the update</h3><p>Select Install update. Companion closes to install the new version.</p></li>
+<li><h3>Wait for installation</h3><p>Do not turn off your computer or launch Companion again until installation finishes.</p></li></ol><div class="update-note"><p>Version 1.7.0 STABLE does not display separate installation progress after the app closes. This improvement is planned for a future update.</p></div>
 </div></section>
 <section id="history" class="band"><div class="wrap">
 <div class="section-head"><h2>Release history</h2><p>The main changes in stable releases. Each entry links to its files and notes on GitHub.</p></div><ul class="releases"><li><a href="https://github.com/Surik115/dayz-companion-releases/releases/tag/v1.7.0"><strong class="release-version">1.7.0 <span class="release-channel">STABLE</span><time datetime="2026-11-20">Nov 20, 2026</time></strong><p>The control centre brings nine tools, settings and maintenance together. The release includes the full Windows ZIP, a signed updater and a separate migration package for older installations.</p><span class="arrow" aria-hidden="true">›</span></a></li>

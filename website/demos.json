@@ -2,7 +2,6 @@
   "magnifier": {
     "ru": {
       "file": "stable-magnifier-ru.webp",
-      "thumb": "stable-magnifier-ru-800.webp",
       "width": 1100,
       "height": 700
     }
@@ -10,7 +9,6 @@
   "morse": {
     "ru": {
       "file": "stable-morse-ru.webp",
-      "thumb": "stable-morse-ru-800.webp",
       "width": 1100,
       "height": 700
     }
@@ -18,7 +16,6 @@
   "gamma": {
     "ru": {
       "file": "stable-gamma-ru.webp",
-      "thumb": "stable-gamma-ru-800.webp",
       "width": 1100,
       "height": 700
     }
@@ -26,7 +23,6 @@
   "code-lock": {
     "ru": {
       "file": "stable-code-lock-ru.webp",
-      "thumb": "stable-code-lock-ru-800.webp",
       "width": 1100,
       "height": 700
     }
@@ -34,7 +30,6 @@
   "auto-lean": {
     "ru": {
       "file": "stable-auto-lean-ru.webp",
-      "thumb": "stable-auto-lean-ru-800.webp",
       "width": 1100,
       "height": 700
     }
@@ -44,5 +39,401 @@
     "thumb": "morse-hud-800.webp",
     "width": 2560,
     "height": 1440
+  },
+  "interface": {
+    "magnifier": [
+      {
+        "file": "interface-magnifier-20261124.webp",
+        "thumb": "interface-magnifier-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "morse": [
+      {
+        "file": "interface-morse-20261124.webp",
+        "thumb": "interface-morse-20261124-800.webp",
+        "width": 1241,
+        "height": 792,
+        "note": {
+          "ru": "PIN-коды в истории передач скрыты.",
+          "en": "PIN codes in transmission history are hidden."
+        }
+      },
+      {
+        "file": "interface-morse-details-20261124.webp",
+        "thumb": "interface-morse-details-20261124-800.webp",
+        "width": 1241,
+        "height": 792,
+        "label": {
+          "ru": "Морзе Nasdara · журнал и схема бункеров",
+          "en": "Nasdara Morse decoder · history and bunker map"
+        },
+        "note": {
+          "ru": "PIN-коды в истории передач скрыты.",
+          "en": "PIN codes in transmission history are hidden."
+        }
+      }
+    ],
+    "gamma": [
+      {
+        "file": "interface-gamma-20261124.webp",
+        "thumb": "interface-gamma-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "earplugs": [
+      {
+        "file": "interface-earplugs-20261124.webp",
+        "thumb": "interface-earplugs-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "auto-run": [
+      {
+        "file": "interface-auto-run-20261124.webp",
+        "thumb": "interface-auto-run-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "crosshair": [
+      {
+        "file": "interface-crosshair-20261124.webp",
+        "thumb": "interface-crosshair-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      },
+      {
+        "file": "interface-crosshair-details-20261124.webp",
+        "thumb": "interface-crosshair-details-20261124-800.webp",
+        "width": 1241,
+        "height": 792,
+        "label": {
+          "ru": "Прицел · внешний вид и положение",
+          "en": "Crosshair · appearance and position"
+        }
+      }
+    ],
+    "code-lock": [
+      {
+        "file": "interface-code-lock-20261124.webp",
+        "thumb": "interface-code-lock-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "xam-map": [
+      {
+        "file": "interface-xam-map-20261124.webp",
+        "thumb": "interface-xam-map-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "auto-lean": [
+      {
+        "file": "interface-auto-lean-20261124.webp",
+        "thumb": "interface-auto-lean-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ]
+  },
+  "gameplay": {
+    "morse": [
+      {
+        "file": "gameplay-nasdara-radio-20261124.webp",
+        "thumb": "gameplay-nasdara-radio-20261124-800.webp",
+        "width": 2048,
+        "height": 1142,
+        "label": {
+          "ru": "Приём радиопередачи Nasdara",
+          "en": "Receiving a Nasdara radio transmission"
+        },
+        "caption": {
+          "ru": "Приём радиопередачи Nasdara. Демонстрационный кадр из игры.",
+          "en": "Receiving a Nasdara radio transmission. Gameplay demonstration (Russian captions)."
+        }
+      },
+      {
+        "file": "gameplay-nasdara-decoded-20261124.webp",
+        "thumb": "gameplay-nasdara-decoded-20261124-800.webp",
+        "width": 2048,
+        "height": 1141,
+        "label": {
+          "ru": "Расшифрованная передача: координаты и PIN в HUD",
+          "en": "Decoded transmission: coordinates and PIN in the HUD"
+        },
+        "caption": {
+          "ru": "Расшифрованная передача: координаты и PIN в HUD. Демонстрационный кадр из игры.",
+          "en": "Decoded transmission: coordinates and PIN in the HUD. Gameplay demonstration (Russian captions)."
+        }
+      }
+    ],
+    "xam-map": [
+      {
+        "file": "gameplay-xam-overlay-20261124.webp",
+        "thumb": "gameplay-xam-overlay-20261124-800.webp",
+        "width": 2048,
+        "height": 1138,
+        "label": {
+          "ru": "Карта Nasdara поверх игры и панель Companion",
+          "en": "Nasdara map overlay and Companion controls"
+        },
+        "caption": {
+          "ru": "Карта Nasdara поверх игры и панель Companion. Демонстрационный кадр из игры.",
+          "en": "Nasdara map overlay and Companion controls. Gameplay demonstration (Russian captions)."
+        }
+      }
+    ],
+    "auto-run": [
+      {
+        "file": "gameplay-auto-run-enabled-20261124.webp",
+        "thumb": "gameplay-auto-run-enabled-20261124-800.webp",
+        "width": 2048,
+        "height": 1149,
+        "label": {
+          "ru": "Автобег включён",
+          "en": "Auto Run enabled"
+        },
+        "caption": {
+          "ru": "Автобег включён. Демонстрационный кадр из игры.",
+          "en": "Auto Run enabled. Gameplay demonstration (Russian captions)."
+        }
+      }
+    ],
+    "auto-lean": [
+      {
+        "file": "gameplay-auto-lean-gameplay-20261124.webp",
+        "thumb": "gameplay-auto-lean-gameplay-20261124-800.webp",
+        "width": 2048,
+        "height": 1151,
+        "label": {
+          "ru": "Автоматический наклон при боковом движении",
+          "en": "Automatic leaning while strafing"
+        },
+        "caption": {
+          "ru": "Автоматический наклон при боковом движении. Демонстрационный кадр из игры.",
+          "en": "Automatic leaning while strafing. Gameplay demonstration (Russian captions)."
+        }
+      }
+    ],
+    "earplugs": [
+      {
+        "file": "gameplay-earplugs-muted-20261124.webp",
+        "thumb": "gameplay-earplugs-muted-20261124-800.webp",
+        "width": 2048,
+        "height": 1146,
+        "label": {
+          "ru": "Беруши: приглушение звука включено",
+          "en": "Earplugs: reduced volume enabled"
+        },
+        "caption": {
+          "ru": "Беруши: приглушение звука включено. Демонстрационный кадр из игры.",
+          "en": "Earplugs: reduced volume enabled. Gameplay demonstration (Russian captions)."
+        }
+      }
+    ]
+  },
+  "interfaceEn": {
+    "magnifier": [
+      {
+        "file": "interface-magnifier-en-20261124.webp",
+        "thumb": "interface-magnifier-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "morse": [
+      {
+        "file": "interface-morse-en-20261124.webp",
+        "thumb": "interface-morse-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792,
+        "note": {
+          "ru": "PIN-коды в истории передач скрыты.",
+          "en": "PIN codes in transmission history are hidden."
+        }
+      },
+      {
+        "file": "interface-morse-details-en-20261124.webp",
+        "thumb": "interface-morse-details-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792,
+        "label": {
+          "ru": "Морзе Nasdara · журнал и схема бункеров",
+          "en": "Nasdara Morse decoder · history and bunker map"
+        },
+        "note": {
+          "ru": "PIN-коды в истории передач скрыты.",
+          "en": "PIN codes in transmission history are hidden."
+        }
+      }
+    ],
+    "gamma": [
+      {
+        "file": "interface-gamma-en-20261124.webp",
+        "thumb": "interface-gamma-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "earplugs": [
+      {
+        "file": "interface-earplugs-en-20261124.webp",
+        "thumb": "interface-earplugs-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "auto-run": [
+      {
+        "file": "interface-auto-run-en-20261124.webp",
+        "thumb": "interface-auto-run-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "crosshair": [
+      {
+        "file": "interface-crosshair-en-20261124.webp",
+        "thumb": "interface-crosshair-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      },
+      {
+        "file": "interface-crosshair-details-en-20261124.webp",
+        "thumb": "interface-crosshair-details-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792,
+        "label": {
+          "ru": "Прицел · внешний вид и положение",
+          "en": "Crosshair · appearance and position"
+        }
+      }
+    ],
+    "code-lock": [
+      {
+        "file": "interface-code-lock-en-20261124.webp",
+        "thumb": "interface-code-lock-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "xam-map": [
+      {
+        "file": "interface-xam-map-en-20261124.webp",
+        "thumb": "interface-xam-map-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ],
+    "auto-lean": [
+      {
+        "file": "interface-auto-lean-en-20261124.webp",
+        "thumb": "interface-auto-lean-en-20261124-800.webp",
+        "width": 1241,
+        "height": 792
+      }
+    ]
+  },
+  "gameplayEn": {
+    "morse": [
+      {
+        "file": "gameplay-nasdara-radio-en-20261124.webp",
+        "thumb": "gameplay-nasdara-radio-en-20261124-800.webp",
+        "width": 2048,
+        "height": 1142,
+        "label": {
+          "ru": "Приём радиопередачи Nasdara",
+          "en": "Receiving a Nasdara radio transmission"
+        },
+        "caption": {
+          "ru": "Приём радиопередачи Nasdara. Демонстрационный кадр из игры.",
+          "en": "Receiving a Nasdara radio transmission. Gameplay demonstration with English annotations; original game interface retained."
+        }
+      },
+      {
+        "file": "gameplay-nasdara-decoded-en-20261124.webp",
+        "thumb": "gameplay-nasdara-decoded-en-20261124-800.webp",
+        "width": 2048,
+        "height": 1141,
+        "label": {
+          "ru": "Расшифрованная передача: координаты и PIN в HUD",
+          "en": "Decoded transmission: coordinates and PIN in the HUD"
+        },
+        "caption": {
+          "ru": "Расшифрованная передача: координаты и PIN в HUD. Демонстрационный кадр из игры.",
+          "en": "Decoded transmission: coordinates and PIN in the HUD. Gameplay demonstration with English annotations; original game interface retained."
+        }
+      }
+    ],
+    "xam-map": [
+      {
+        "file": "gameplay-xam-overlay-en-20261124.webp",
+        "thumb": "gameplay-xam-overlay-en-20261124-800.webp",
+        "width": 2048,
+        "height": 1138,
+        "label": {
+          "ru": "Карта Nasdara поверх игры и панель Companion",
+          "en": "Nasdara map overlay and Companion controls"
+        },
+        "caption": {
+          "ru": "Карта Nasdara поверх игры и панель Companion. Демонстрационный кадр из игры.",
+          "en": "Nasdara map overlay and Companion controls. Gameplay demonstration with English annotations; original game interface retained."
+        }
+      }
+    ],
+    "auto-run": [
+      {
+        "file": "gameplay-auto-run-enabled-en-20261124.webp",
+        "thumb": "gameplay-auto-run-enabled-en-20261124-800.webp",
+        "width": 2048,
+        "height": 1149,
+        "label": {
+          "ru": "Автобег включён",
+          "en": "Auto Run enabled"
+        },
+        "caption": {
+          "ru": "Автобег включён. Демонстрационный кадр из игры.",
+          "en": "Auto Run enabled. Gameplay demonstration with English annotations; original game interface retained."
+        }
+      }
+    ],
+    "auto-lean": [
+      {
+        "file": "gameplay-auto-lean-gameplay-en-20261124.webp",
+        "thumb": "gameplay-auto-lean-gameplay-en-20261124-800.webp",
+        "width": 2048,
+        "height": 1151,
+        "label": {
+          "ru": "Автоматический наклон при боковом движении",
+          "en": "Automatic leaning while strafing"
+        },
+        "caption": {
+          "ru": "Автоматический наклон при боковом движении. Демонстрационный кадр из игры.",
+          "en": "Automatic leaning while strafing. Gameplay demonstration with English annotations; original game interface retained."
+        }
+      }
+    ],
+    "earplugs": [
+      {
+        "file": "gameplay-earplugs-muted-en-20261124.webp",
+        "thumb": "gameplay-earplugs-muted-en-20261124-800.webp",
+        "width": 2048,
+        "height": 1146,
+        "label": {
+          "ru": "Беруши: приглушение звука включено",
+          "en": "Earplugs: reduced volume enabled"
+        },
+        "caption": {
+          "ru": "Беруши: приглушение звука включено. Демонстрационный кадр из игры.",
+          "en": "Earplugs: reduced volume enabled. Gameplay demonstration with English annotations; original game interface retained."
+        }
+      }
+    ]
   }
 }

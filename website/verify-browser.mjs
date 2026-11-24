@@ -109,7 +109,7 @@ async function interactions() {
   await page.waitForFunction(() => !document.querySelector('[data-language-link]').hash);
   await page.locator('[data-language-link]').click();
   await page.waitForURL(base + '/en/tools/morse/?utm_source=qa');
-  await page.locator('.jump a[href="#guide"]').click();
+  await page.locator('.feature-hero a[href="#guide"]').click();
   assert.equal(new URL(page.url()).hash, '#guide');
   assert(await page.locator('#guide h2').evaluate(el => el.getBoundingClientRect().top >= 0));
   pass('Deep language pairs and matching anchors, with unknown anchors removed');

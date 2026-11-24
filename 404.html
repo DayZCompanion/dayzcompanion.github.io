@@ -45,5 +45,18 @@
       <a href="/en/" lang="en">English home</a>
     </nav>
   </main>
+<script>
+if (location.pathname === "/en" || location.pathname.startsWith("/en/")) {
+  document.documentElement.lang = "en";
+  document.title = "Page not found - DayZ Companion";
+  document.querySelector("h1").textContent = "Page not found";
+  document.querySelector(".message").textContent = "This page may have been moved, or the link may contain an error.";
+  document.querySelector(".brand").href = "/en/";
+  const nav = document.querySelector("main nav");
+  nav.setAttribute("aria-label", "Site sections");
+  const labels = [["/en/", "Home", "en"], ["/en/download/", "Download", "en"], ["/en/#support", "Support", "en"], ["/", "\u0420\u0443\u0441\u0441\u043a\u0430\u044f \u0432\u0435\u0440\u0441\u0438\u044f", "ru"]];
+  [...nav.querySelectorAll("a")].forEach((a,i)=>{a.href=labels[i][0];a.textContent=labels[i][1];a.lang=labels[i][2];});
+}
+</script>
 </body>
 </html>
