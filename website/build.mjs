@@ -71,7 +71,13 @@ async function validateOutput() {
     assert(!/\bTEST\b|\b1\.6\.2\b|data-planned-tool|assets\/ui-icons\//.test(text), 'Obsolete copy in ' + url);
     const zips = [...text.matchAll(/<a [^>]*href="https:[^"]+\.zip"[^>]*>/gi)];
     const isDownload = /(?:^|\/)download\/$/.test(url);
-    assert.equal(zips.length, isDownload ? 1 : 0, 'Unexpected number of ZIP links on ' + url);
+    const isHome = url === '/' || url === '/en/';
+    assert.equal(zips.length, isDownload ? 1 : isHome ? 2 : 0, 'Unexpected number of ZIP links on ' + url);
+    if (isHome) {
+      assert(zips.every(z => z[0].includes('data-metrika-goal="download_click"') && z[0].includes('data-release-version=')), 'Home ZIP links must retain analytics and version metadata');
+      assert(text.match(/<section class="hero hero-art home-hero".*?<\/section>/s)[0].includes(zips[0][0]), 'First ZIP must be in the home hero');
+      assert(text.slice(text.indexOf('class="catalog-download"'), text.indexOf('<section id="preview"')).includes(zips[1][0]), 'Second ZIP must be in the catalogue download block');
+    }
     if (isDownload) assert(text.match(/<article class="release-panel">.*?<\/article>/s)[0].includes(zips[0][0]),
       'ZIP must be in the STABLE card');
     for (const match of text.matchAll(/\s(?:href|src)="([^"]+)"/g)) {
@@ -103,7 +109,7 @@ async function build() {
   const release = releases[0];
   validateCopy(locales.ru, locales.en, 'copy');
   assert.equal(tools.length, 9);
-  assert.equal(pages.length, 12);
+  assert.equal(pages.length, 13);
   assert.equal(new Set(pages.map(page => page.id)).size, pages.length);
   const cssVersion = await hash('assets/site.css');
   const jsVersion = await hash('assets/site.js');

@@ -27,7 +27,6 @@
   const toolsMenu = document.querySelector('.nav-tools');
   const toolTrigger = toolsMenu.querySelector('summary');
   const mobile = window.matchMedia('(max-width: 820px)');
-
   function setMobileMenu(open, restore = false) {
     const wasOpen = navigation.classList.contains('open');
     mobileMenu.setAttribute('aria-expanded', String(open));

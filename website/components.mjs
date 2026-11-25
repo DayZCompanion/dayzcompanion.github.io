@@ -33,7 +33,7 @@ export function components({ lang, copy, release }) {
   }
   function rich(text) {
     let output = '', offset = 0;
-    for (const match of text.matchAll(/\[([^\]]+)\]\(([a-z0-9#-]+)\)/g)) {
+    for (const match of text.matchAll(/\[([^\]]+)\]\(([A-Za-z0-9#-]+)\)/g)) {
       output += escape(text.slice(offset, match.index)) + link(match[2], match[1], 'text-link');
       offset = match.index + match[0].length;
     }
@@ -54,24 +54,31 @@ export function components({ lang, copy, release }) {
     return '<' + tag + ' class="' + type + '">' + items.map(([title, description]) =>
       '<li>' + heading(3, title) + p(description) + '</li>').join('\n') + '</' + tag + '>';
   };
-  const faq = (items, extra = 'alt') => section('faq', split(ui.faq, '<div class="questions">' + items.map(([question, answer]) =>
-    '<details><summary>' + escape(question) + '</summary>' + p(answer) + '</details>').join('\n') + '</div>'), extra);
+  const faq = (items, extra = 'alt') => section('faq', split(ui.faq, '<div class="questions">' + items.map(([question, answer], index) =>
+    '<details' + (index === 0 ? ' open' : '') + '><summary>' + escape(question) + '</summary>' + p(answer) + '</details>').join('\n') + '</div>'), extra);
   const jump = (items, label = ui.jump, className = '') =>
     '<nav class="wrap jump' + (className ? ' ' + className : '') + '" aria-label="' + escape(label) + '">' +
     items.map(([id, label]) => link('#' + id, label)).join('') + '</nav>';
   const button = (target, label = ui.download, style = 'primary', prefix) =>
-    link(target, label, 'btn ' + style, prefix);
+    link(target, label, 'btn ' + style + (target === 'download' || target === 'zip' ? ' download-cta' : ''), prefix);
   const callout = (title, description, action, className = '') =>
     '<div class="callout' + (className ? ' ' + className : '') + '"><div>' + heading(2, title) + p(description) +
     '</div>' + action + '</div>';
   const list = items => '<ul class="material-list">' + items.map(([id, section, label, desc]) =>
     '<li><a href="' + url(id, section) + '"><strong>' + escape(label) + '</strong><span>' +
     escape(desc) + '</span>' + arrow + '</a></li>').join('\n') + '</ul>';
-  function cards(items, catalog = false) {
+  function toolPanel(items, activeId) {
+    return '<nav class="tool-panel" aria-label="' + escape(ui.tools) + '">' + items.map(page =>
+      '<a class="tool-panel-link" id="tool-' + page.id + '" href="' + url(page.id) + '"' +
+      (page.id === activeId ? ' aria-current="page"' : '') + '>' +
+      icon(page.icon) + '<span>' + escape(copy[page.id].name) + '</span></a>').join('\n') + '</nav>';
+  }
+  function cards(items, catalog = false, activeId = null) {
     return '<div class="tool-grid' + (catalog ? ' tool-catalog' : '') + '">' + items.map(page => {
       const t = copy[page.id];
-      const content = icon(page.icon) + '<div><b>' + escape(t.name) + '</b>' + p(t.card) + '</div>' + arrow;
-      return '<a class="tool-card"' + (catalog ? ' id="tool-' + page.id + '"' : '') + ' href="' + url(page.id) + '">' +
+      const content = icon(page.icon) + '<div><b>' + escape(t.name) + '</b>' + (activeId ? '' : p(t.card)) + '</div>' +
+        (activeId ? '' : catalog ? '<span class="tool-more">' + (lang === 'ru' ? 'Подробнее' : 'Learn more') + '</span>' : arrow);
+      return '<a class="tool-card"' + (catalog ? ' id="tool-' + page.id + '"' : '') + (page.id === activeId ? ' aria-current="page"' : '') + ' href="' + url(page.id) + '">' +
         (catalog ? '<div class="tool-media"><img src="' + asset(page.cardArt) +
           '" alt="" loading="lazy" decoding="async" fetchpriority="low"></div><div class="tool-card-content">' + content + '</div>' : content) + '</a>';
     }).join('\n') + '</div>';
@@ -79,7 +86,7 @@ export function components({ lang, copy, release }) {
   function image(shot, label, isHero = false, className = '', carousel = false) {
     return '<img src="' + asset(shot.thumb) + '"' + (className ? ' class="' + className + '"' : '') +
       ' width="' + shot.width + '" height="' + shot.height + '" alt="' + escape(label) + '"' +
-      (isHero ? ' srcset="' + asset(shot.mobile) + ' 480w, ' + asset(shot.thumb) + ' 800w" sizes="(max-width: 740px) 90vw, 660px"' : '') +
+      (isHero ? ' srcset="' + asset(shot.mobile) + ' 480w, ' + asset(shot.thumb) + ' 800w, ' + asset('stable-home-' + lang + '-full.webp') + ' ' + shot.width + 'w" sizes="(max-width: 1030px) 90vw, (max-width: 1600px) 57vw, 930px"' : '') +
       (carousel && shot.width > 800 ? ' srcset="' + asset(shot.thumb) + ' 800w, ' + asset(shot.file) + ' ' + shot.width + 'w" sizes="(max-width: 740px) 90vw, (max-width: 1600px) 67vw, 1050px"' : '') +
       (isHero ? ' fetchpriority="high"' : ' loading="lazy" decoding="async"') + '>';
   }
@@ -106,7 +113,7 @@ export function components({ lang, copy, release }) {
     return '<div class="demo-carousel" data-gallery data-carousel role="group" aria-label="' + escape(title) +
       '"><div class="demo-carousel-track" data-carousel-track>' + figures.join('\n') + '</div>' + controls + '</div>';
   }
-  return { url, escape, rich, link, p, heading, section, head, split, prose, features, faq, jump, button, callout, list, cards, image, gallery, demoCarousel };
+  return { url, escape, rich, link, p, heading, section, head, split, prose, features, faq, jump, button, callout, list, cards, toolPanel, image, gallery, demoCarousel };
 }
 
 export function shell({ lang, copy, page, release, content, anchors, cssVersion, jsVersion, social }) {
@@ -116,7 +123,7 @@ export function shell({ lang, copy, page, release, content, anchors, cssVersion,
   const canonical = origin + url(page.id);
   const altLang = lang === 'ru' ? 'en' : 'ru';
   const current = id => id === page.id ? ' aria-current="page"' : '';
-  const navLink = id => '<a href="' + url(id) + '"' + current(id) + '>' + escape(copy[id].name) + '</a>';
+  const navLink = id => '<a href="' + url(id) + '"' + (id === 'download' ? ' class="nav-download"' : '') + current(id) + '>' + escape(copy[id].name) + '</a>';
   const wordmark = '<a class="wordmark" href="' + url('home') + '"><img src="' +
     asset('dayz-logo-mark.png') + '" alt="" width="42" height="32">DayZ Companion</a>';
   const languageLink = '<a data-language-link data-anchors="' + html(anchors.join(' ')) + '" href="' +
@@ -152,17 +159,26 @@ export function shell({ lang, copy, page, release, content, anchors, cssVersion,
     '<header class="shell"><div class="wrap shell-row">' + wordmark +
     '<button type="button" class="mobile-menu" aria-expanded="false" aria-controls="navigation" data-open="' +
     escape(ui.openMenu) + '" data-close="' + escape(ui.closeMenu) + '">' + escape(ui.menu) + '</button>\n' +
-    '<nav class="navigation" id="navigation" aria-label="' + escape(ui.nav) + '">' + navLink('home') +
+    '<nav class="navigation" id="navigation" aria-label="' + escape(ui.nav) + '">' +
     '<details class="nav-tools"><summary' + (page.template === 'tool' ? ' class="current-group"' : '') + '>' +
-    escape(ui.tools) + '</summary><div class="tool-pop">' + tools.map(tool =>
-      '<a href="' + url(tool.id) + '"' + current(tool.id) + '>' + icon(tool.icon, '', true) + escape(copy[tool.id].name) + '</a>').join('\n') +
-    '</div></details>' + navLink('about') + navLink('download') +
+    escape(ui.tools) + '</summary><div class="tool-pop">' +
+    '<div class="tool-pop-track">' + tools.map(tool =>
+      '<a href="' + url(tool.id) + '"' + current(tool.id) + ' class="menu-tool-card" style="--menu-art:url(' + asset(tool.cardArt) + ')">' +
+      icon(tool.icon, '', true) + '<span><b>' + escape(copy[tool.id].name) + '</b><small>' +
+      escape(copy[tool.id].card) + '</small></span>' + arrow + '</a>').join('\n') +
+    '</div></div></details>' + navLink('about') +
+    link('cloudtips', lang === 'ru' ? 'Поддержать' : 'Support', 'nav-donate') + navLink('download') +
     '<span class="lang" role="group" aria-label="' + escape(ui.language) + '">' +
     language.join('<span aria-hidden="true">/</span>') + '</span></nav></div></header>\n' +
     '<main id="main" tabindex="-1">\n' + content + '\n</main>\n' +
-    '<footer class="site-footer"><div class="wrap footer-row"><div>' + wordmark + '<p class="caption">' +
+    '<footer class="site-footer"><div class="wrap"><div class="footer-row"><div>' + wordmark + '<p class="caption">' +
     escape(ui.footerNote) + '</p></div><nav aria-label="' + escape(ui.footer) + '">' + link('home#tools', ui.tools) +
-    link('about', copy.about.name) + link('download', ui.download) + link('form', ui.feedback) + '</nav></div></footer>\n' +
+    link('about', copy.about.name) + link('download', ui.download) + link('form', ui.feedback) +
+    link('cloudtips', lang === 'ru' ? 'Поддержать разработку' : 'Support development', 'footer-donate') +
+    '</nav></div><div class="footer-meta"><span>&copy; 2026 DayZ Companion</span>' +
+    '<div class="footer-legal">' + link('privacy', copy.privacy.name) + '</div>' +
+    link('f5', lang === 'ru' ? 'Разработано при поддержке F5' : 'Developed with support from F5', 'footer-credit') +
+    '</div></div></footer>\n' +
     (content.includes('data-gallery') ? '<dialog class="lightbox" aria-labelledby="lightbox-title">' +
       '<div class="lightbox-bar"><div class="lightbox-heading"><p id="lightbox-title" aria-live="polite"></p><span data-lightbox-count aria-live="polite"></span></div><div class="lightbox-keys">' +
       [['zoom-out', lang === 'ru' ? '\u0423\u043c\u0435\u043d\u044c\u0448\u0438\u0442\u044c' : 'Zoom out', '&#8722;'], ['zoom-in', ui.zoom, '+'], ['close', ui.close, '&#215;']].map(([id,label,key]) =>

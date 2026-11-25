@@ -3,6 +3,12 @@ export const languages = ['ru', 'en'];
 export const archive = 'https://github.com/Surik115/dayz-companion-releases/releases';
 export const links = {
   archive,
+  f5: 'https://f5-studio.ru/',
+  metricaData: 'https://yandex.ru/support/metrica/ru/code/data-collected',
+  yandexPrivacy: 'https://yandex.ru/legal/confidential/',
+  metricaTerms: 'https://yandex.ru/legal/metrica_termsofuse/ru/',
+  cloudtipsPrivacy: 'https://cloudtips.ru/privacy',
+  githubPrivacy: 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement',
   cloudtips: 'https://pay.cloudtips.ru/p/392ecf9b',
   battleye: 'https://www.battleye.com/support/faq/',
   xam: 'https://dayz.xam.nu/',
@@ -38,6 +44,7 @@ export const pages = [
   ...tools,
   { id: 'download', template: 'download', path: '/download/', art: 'home-valley.webp' },
   { id: 'about', template: 'about', path: '/about/', art: 'hero.webp' },
+  { id: 'privacy', template: 'privacy', path: '/privacy/', art: 'home-valley.webp' },
 ];
 export { tools };
 export function route(id, lang) {

@@ -27,6 +27,8 @@ for (const { page, lang, url } of allRoutes) {
   assert(text.includes('<html lang="' + lang + '">'), url);
   assert(text.includes('href="' + localizedLinks.form[lang] + '" data-metrika-goal="support_click"'), url);
   assert(!text.includes(localizedLinks.form[lang === 'ru' ? 'en' : 'ru']), 'Wrong form language on ' + url);
+  assert(text.includes('href="' + route('privacy', lang) + '"'), url);
+  assert(text.includes('href="https://f5-studio.ru/"'), url);
   assert(text.includes('rel="canonical" href="' + origin + url + '"'), url);
   for (const alternate of ['ru', 'en', 'x-default']) {
     const href = origin + route(page.id, alternate === 'x-default' ? 'ru' : alternate);
@@ -42,7 +44,7 @@ for (const { page, lang, url } of allRoutes) {
 }
 const sitemap = await (await fetch(base + '/sitemap.xml')).text();
 const entries = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
-assert.equal(entries.length, 24);
+assert.equal(entries.length, pages.length * languages.length);
 assert.deepEqual(new Set(entries), expected);
 assert.match(await (await fetch(base + '/robots.txt')).text(), /Sitemap: https:\/\/dayz-mod.ru\/sitemap.xml/);
 for (const url of ['/404.html', '/en/missing/', '/unknown/']) {
@@ -75,8 +77,11 @@ assert.equal(result.status, 0, result.stderr || result.stdout);
 for (const lang of languages) {
   const read = id => readFile(join(output, route(id, lang).slice(1) + 'index.html'), 'utf8');
   const [home, download, about, morse] = await Promise.all(['home', 'download', 'about', 'morse'].map(read));
-  assert(home.includes(hypothetical + ' STABLE'));
-  assert(home.includes(screenshotRelease + ' STABLE.'));
+  assert(!home.includes(hypothetical + ' STABLE'), 'Home hero must not display the release label');
+  assert.equal(home.split(testRecord.zip).length - 1, 2, 'Both home download buttons use the current STABLE ZIP');
+  assert.equal(home.split('data-release-version="' + hypothetical + '"').length - 1, 2);
+  assert(!home.includes(current.zip), 'Home must not keep the previous ZIP URL');
+  assert(!home.includes(screenshotRelease + ' STABLE.'), 'Home preview must not display the version instruction');
   assert(morse.includes(screenshotRelease + ' STABLE'));
   assert(about.includes(hypothetical));
   assert(download.includes(testRecord.zip) && download.includes('321&nbsp;'));
@@ -89,4 +94,4 @@ for (const lang of languages) {
 }
 assert.equal(await readFile(join(root, 'website/releases.json'), 'utf8'), initial);
 assert.deepEqual(await Promise.all(allRoutes.map(({ url }) => content(url).then(hash))), baseline);
-console.log('PASS: 24 routes, 24 SEO pairs, sitemap, 404, redirects, preview isolation, and STABLE substitution on RU/EN.');
+console.log('PASS: ' + allRoutes.length + ' routes, ' + allRoutes.length + ' SEO pairs, sitemap, 404, redirects, preview isolation, and STABLE substitution on RU/EN.');
