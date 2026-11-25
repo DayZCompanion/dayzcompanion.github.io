@@ -471,16 +471,15 @@ body.lightbox-open { overflow: hidden; }
 .navigation > .nav-download, .navigation > .nav-download:hover, .navigation > .nav-download[aria-current], .download-cta { background:var(--download-red); color:#fff; text-decoration:none; border-radius:var(--radius-small); }
 .navigation > .nav-download { padding:8px 18px; font-weight:700; justify-content:center; }
 .navigation > .nav-download:hover, .download-cta:hover { background:#df3942; }
-.tool-pop-track { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-.tool-pop .menu-tool-card { position:relative; isolation:isolate; min-width:0; min-height:112px; display:grid; grid-template-columns:34px minmax(0,1fr) 10px; gap:10px; align-items:center; padding:12px; border:0; border-radius:var(--radius); background:linear-gradient(0deg,#0d0f10fa 0%,#0d0f10dd 38%,#0d0f1040 100%),var(--menu-art) center / cover; text-decoration:none; }
-.tool-pop .menu-tool-card:hover, .tool-pop .menu-tool-card[aria-current] { background:linear-gradient(0deg,#151719fa,#0d0f10b0 65%,#0d0f1030),var(--menu-art) center / cover;  text-decoration:none; }
-.tool-pop .menu-tool-card b { display:block; font-size:.98rem; line-height:1.25; }
-.tool-pop .menu-tool-card small { display:block; color:var(--quiet); font-size:.82rem; line-height:1.35; margin-top:6px; }
-.tool-pop .menu-tool-card img { width:34px; height:34px; padding:6px; border-radius:5px; background:#252c2eea; align-self:center; }
-.tool-pop .menu-tool-card .arrow { align-self:center; }
+.tool-pop-track { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; }
+.tool-pop .menu-tool-card { min-width:0; min-height:62px; display:grid; grid-template-columns:34px minmax(0,1fr); gap:10px; align-items:center; padding:10px; border:1px solid #353a3c; border-radius:var(--radius-small); background:#272b2d; text-decoration:none; transition:background-color 150ms ease,border-color 150ms ease,color 150ms ease; }
+.tool-pop .menu-tool-card:hover, .tool-pop .menu-tool-card[aria-current], .tool-pop .menu-tool-card:focus-visible { background:#392426; border-color:#754044; color:#ff9293; text-decoration:none; }
+.tool-pop .menu-tool-card b { display:block; font-size:.94rem; line-height:1.3; overflow-wrap:break-word; }
+.tool-pop .menu-tool-card img { width:34px; height:34px; padding:6px; border-radius:5px; background:#1b1f21; align-self:center; transition:background-color 150ms ease; }
+.tool-pop .menu-tool-card:hover img, .tool-pop .menu-tool-card[aria-current] img, .tool-pop .menu-tool-card:focus-visible img { background:#503033; }
 @media (min-width:821px) {
  .nav-tools { position:static; }
- .tool-pop { top:100%; left:50%; transform:translateX(-50%); width:min(930px, calc(100vw - 2 * var(--edge))); padding:16px; border:1px solid var(--line); max-height:calc(100dvh - var(--header-height) - 12px); overflow-y:auto; }
+ .tool-pop { top:100%; left:50%; transform:translateX(-50%); width:min(720px, calc(100vw - 2 * var(--edge))); padding:12px; background:#1b1e20; border:1px solid var(--line); max-height:calc(100dvh - var(--header-height) - 12px); overflow-y:auto; }
 }
 @media(min-width:1031px) {
  .home-hero .hero-grid { width:min(1600px, calc(100% - 2 * clamp(24px,3.3vw,58px))); grid-template-columns:minmax(0,.78fr) minmax(0,1.32fr); gap:clamp(24px,3vw,52px); }
@@ -511,7 +510,7 @@ body.lightbox-open { overflow: hidden; }
 }
 @media(max-width:540px) {
  .tool-pop-track { grid-template-columns:minmax(0,1fr); }
- .tool-pop .menu-tool-card { min-height:88px; }
+ .tool-pop .menu-tool-card { min-height:52px; padding:8px 10px; }
  #tools .tool-card-content { min-height:0; padding:14px; gap:12px; align-items:center; }
 }
 

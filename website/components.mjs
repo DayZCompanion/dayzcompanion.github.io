@@ -163,9 +163,8 @@ export function shell({ lang, copy, page, release, content, anchors, cssVersion,
     '<details class="nav-tools"><summary' + (page.template === 'tool' ? ' class="current-group"' : '') + '>' +
     escape(ui.tools) + '</summary><div class="tool-pop">' +
     '<div class="tool-pop-track">' + tools.map(tool =>
-      '<a href="' + url(tool.id) + '"' + current(tool.id) + ' class="menu-tool-card" style="--menu-art:url(' + asset(tool.cardArt) + ')">' +
-      icon(tool.icon, '', true) + '<span><b>' + escape(copy[tool.id].name) + '</b><small>' +
-      escape(copy[tool.id].card) + '</small></span>' + arrow + '</a>').join('\n') +
+      '<a href="' + url(tool.id) + '"' + current(tool.id) + ' class="menu-tool-card">' +
+      icon(tool.icon, '', true) + '<b>' + escape(copy[tool.id].name) + '</b></a>').join('\n') +
     '</div></div></details>' + navLink('about') +
     link('cloudtips', lang === 'ru' ? 'Поддержать' : 'Support', 'nav-donate') + navLink('download') +
     '<span class="lang" role="group" aria-label="' + escape(ui.language) + '">' +
